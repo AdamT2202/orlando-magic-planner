@@ -590,6 +590,15 @@ input[list] { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www
 .item.dragging { opacity: 0.4; }
 .item.dov { border-color: var(--accent); background: var(--accentbg); }
 
+/* Park split */
+.item-split { align-items: flex-start; }
+.split-body { flex: 1; min-width: 0; }
+.split-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.6rem; }
+.split-date { font-size: 0.775rem; font-weight: 600; color: var(--text2); }
+.split-parks { display: flex; align-items: center; gap: 0; }
+.split-row { display: flex; align-items: center; gap: 8px; flex: 1; min-width: 0; padding: 0.5rem 0.65rem; background: var(--bg); border-radius: var(--radius-sm); border: 1px solid var(--border); }
+.split-divider { font-size: 0.75rem; color: var(--text3); padding: 0 0.4rem; flex-shrink: 0; }
+
 /* ── FLIGHT DISPLAY ── */
 .flight-route {
   display: grid;

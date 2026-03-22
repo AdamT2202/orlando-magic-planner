@@ -392,6 +392,7 @@
           <div style="border-top:1px solid var(--border);padding-top:1.25rem;margin-top:1.25rem">
             <div class="card-title" style="margin-bottom:0.75rem;color:var(--red)">Danger zone</div>
             <button class="btn btn-danger" onclick="clearAll()">Clear all trip data</button>
+            <button class="btn btn-danger" onclick="confirmDeleteAccount()" style="margin-top:0.5rem">Delete account</button>
           </div>
         </div>
       </div>
@@ -413,6 +414,17 @@
     });
   }
 </script>
-
+<div id="deleteModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:1000;align-items:center;justify-content:center">
+  <div style="background:var(--card);border-radius:12px;padding:2rem;max-width:400px;width:90%;border:1px solid var(--border)">
+    <div style="font-size:1.1rem;font-weight:600;color:var(--text);margin-bottom:0.5rem">Delete account?</div>
+    <p style="font-size:0.85rem;color:var(--text2);margin-bottom:1.25rem">This will permanently delete your account and all trip data. This cannot be undone.</p>
+    <label style="font-size:0.8rem;color:var(--text2)">Type <strong>DELETE</strong> to confirm</label>
+    <input type="text" id="deleteConfirmInput" placeholder="DELETE" style="margin-top:0.4rem;margin-bottom:1rem">
+    <div style="display:flex;gap:0.75rem">
+      <button class="btn" onclick="closeDeleteModal()" style="flex:1">Cancel</button>
+      <button class="btn btn-danger" onclick="doDeleteAccount()" style="flex:1" id="deleteConfirmBtn">Delete account</button>
+    </div>
+  </div>
+</div>
 </body>
 </html>

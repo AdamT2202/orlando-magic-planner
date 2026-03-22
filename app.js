@@ -97,6 +97,48 @@ async function logout() {
   window.location.href = 'index.html';
 }
 
+function confirmDeleteAccount() {
+  const modal = document.getElementById('deleteModal');
+  document.getElementById('deleteConfirmInput').value = '';
+  modal.style.display = 'flex';
+}
+
+function closeDeleteModal() {
+  document.getElementById('deleteModal').style.display = 'none';
+}
+
+async function doDeleteAccount() {
+  const input = document.getElementById('deleteConfirmInput').value.trim();
+  if (input !== 'DELETE') { toast('Type DELETE to confirm'); return; }
+
+  const btn = document.getElementById('deleteConfirmBtn');
+  btn.textContent = 'Deleting…'; btn.disabled = true;
+
+  try {
+    const { data: sessionData } = await sb.auth.getSession();
+    const session = sessionData?.session;
+    if (!session) { toast('Please sign out and sign back in, then try again'); return; }
+
+    const res = await fetch('https://ztomblmoegchycarlskc.supabase.co/functions/v1/delete-account', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${session.access_token}`,
+        'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp0b21ibG1vZWdjaHljYXJsc2tjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQxOTUxNTAsImV4cCI6MjA4OTc3MTE1MH0.pDKDGl8t6k6E6TEArsT_hZMdaeY_ZUfbUg1aAG3LKRM',
+        'Content-Type': 'application/json'
+      }
+    });
+    const data = await res.json();
+    const error = res.ok ? null : data;
+
+    if (error || data?.error) throw new Error(error?.message || data?.error);
+
+    await sb.auth.signOut();
+    window.location.href = 'index.html';
+  } catch (err) {
+    toast('Delete failed: ' + err.message);
+    btn.textContent = 'Delete account'; btn.disabled = false;
+  }
+}
 // ── Show the main app UI ─────────────────────────────────────────────────────
 function showApp() {
   document.getElementById('authWrap').style.display = 'none';
@@ -478,18 +520,55 @@ function renderFlights() {
 function renderParks() {
   const el = document.getElementById('parksList');
   if (!S.parks.length) { el.innerHTML = '<div class="empty"><div class="empty-ico">⊛</div><p>No parks added yet</p></div>'; return; }
-  el.innerHTML = S.parks.map((p, i) => `
-    <div class="item" draggable="true" ondragstart="ds(event,${i})" ondragover="dov(event)" ondrop="dp(event,${i})" ondragleave="dl(event)">
-      <span class="drag-h">⠿</span>
-      <div class="item-icon ico-green">🎢</div>
-      <div class="item-body">
-        <div class="item-name">${p.name}</div>
-        <div class="item-meta">${fmtL(p.date)}${p.time ? ' · from ' + p.time : ''}</div>
-      </div>
-      <span class="badge b-green">Day ${i + 1}</span>
-      <button class="del-btn" onclick="delPark('${p.id}')">✕</button>
-    </div>
-  `).join('');
+
+  // Group parks by date
+  const byDate = {};
+  S.parks.forEach((p, i) => {
+    if (!byDate[p.date]) byDate[p.date] = [];
+    byDate[p.date].push({ ...p, idx: i });
+  });
+
+  let dayNum = 0;
+  el.innerHTML = Object.entries(byDate).sort(([a],[b]) => a.localeCompare(b)).map(([date, parks]) => {
+    dayNum++;
+    if (parks.length === 1) {
+      const p = parks[0];
+      return `
+        <div class="item" draggable="true" ondragstart="ds(event,${p.idx})" ondragover="dov(event)" ondrop="dp(event,${p.idx})" ondragleave="dl(event)">
+          <span class="drag-h">⠿</span>
+          <div class="item-icon ico-green">🎢</div>
+          <div class="item-body">
+            <div class="item-name">${p.name}</div>
+            <div class="item-meta">${fmtL(p.date)}${p.time ? ' · from ' + p.time : ''}</div>
+          </div>
+          <span class="badge b-green">Day ${dayNum}</span>
+          <button class="del-btn" onclick="delPark('${p.id}')">✕</button>
+        </div>`;
+    } else {
+      // Park split — same day, multiple parks
+      const sorted = [...parks].sort((a, b) => (a.time || '00:00').localeCompare(b.time || '00:00'));
+      const parkRows = sorted.map(p => `
+          <div class="split-row">
+            <div class="item-icon ico-green" style="width:28px;height:28px;font-size:13px;border-radius:7px;flex-shrink:0">🎢</div>
+            <div class="item-body">
+              <div class="item-name">${p.name}</div>
+              ${p.time ? `<div class="item-meta">from ${p.time}</div>` : ''}
+            </div>
+            <button class="del-btn" onclick="delPark('${p.id}')">✕</button>
+          </div>`).join('<div class="split-divider">→</div>');
+      return `
+        <div class="item item-split" draggable="true" ondragstart="ds(event,${parks[0].idx})" ondragover="dov(event)" ondrop="dp(event,${parks[0].idx})" ondragleave="dl(event)">
+          <span class="drag-h">⠿</span>
+          <div class="split-body">
+            <div class="split-header">
+              <span class="split-date">${fmtL(date)}</span>
+              <span class="badge b-amber">Park split · Day ${dayNum}</span>
+            </div>
+            <div class="split-parks">${parkRows}</div>
+          </div>
+        </div>`;
+    }
+  }).join('');
 }
 
 function renderDining() {
@@ -549,7 +628,6 @@ function detectConflicts() {
     S.dining.forEach(d => { if (d.date < S.tripStart || d.date > S.tripEnd) cs.push({ sev: 'error', title: 'Dining outside trip dates', detail: d.name + ' on ' + fmtL(d.date) + ' falls outside your trip' }); });
   }
   const pd = {}; S.parks.forEach(p => { if (!pd[p.date]) pd[p.date] = []; pd[p.date].push(p.name); });
-  Object.entries(pd).forEach(([date, parks]) => { if (parks.length > 1) cs.push({ sev: 'warning', title: 'Two parks on the same day', detail: parks.join(' & ') + ' on ' + fmtL(date) }); });
   for (let i = 0; i < S.dining.length; i++) for (let j = i + 1; j < S.dining.length; j++) {
     if (S.dining[i].date === S.dining[j].date && Math.abs(t2m(S.dining[i].time) - t2m(S.dining[j].time)) < 60)
       cs.push({ sev: 'error', title: 'Dining overlap', detail: S.dining[i].name + ' (' + S.dining[i].time + ') and ' + S.dining[j].name + ' (' + S.dining[j].time + ') on ' + fmtL(S.dining[i].date) + ' are less than 1 hr apart' });
@@ -644,5 +722,6 @@ Object.assign(window, {
   addDining, delDining,
   addActivity, delActivity,
   copyLink, exportJSON, dlPDF, emailIt,
-  onDirChange
+  onDirChange,
+  confirmDeleteAccount, closeDeleteModal, doDeleteAccount
 });
