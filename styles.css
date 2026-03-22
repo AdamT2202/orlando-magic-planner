@@ -763,12 +763,14 @@ select option { background: var(--bg2); color: var(--text); }
   .sidegroup { display: contents; }
   .sidelabel { display: none; }
 
-  /* Tab items — fixed height, never wrap */
+  /* Tab items — shrink to content width, fixed height */
   .sideitem {
     white-space: nowrap;
     padding: 0 0.85rem;
     height: 36px;
     min-height: 36px;
+    width: auto;
+    min-width: unset;
     flex-shrink: 0;
     display: inline-flex;
     align-items: center;
