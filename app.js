@@ -6,6 +6,20 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 
 const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+// ── Helpers ──────────────────────────────────────────────────────────────────
+// Extracts IATA code from datalist values like "Manchester (MAN)" or plain "MAN"
+function extractIATA(val) {
+  if (!val) return '';
+  const m = val.match(/\(([A-Z]{3})\)/);
+  return m ? m[1] : val.trim().toUpperCase();
+}
+
+// Maps IATA code → full display name for datalist autofill
+const AIRPORT_NAMES = {"ABZ":"Aberdeen","AUH":"Abu Dhabi","ALC":"Alicante","AMS":"Amsterdam","AYT":"Antalya","ATH":"Athens","ATL":"Atlanta","BCN":"Barcelona","BSL":"Basel","PEK":"Beijing Capital","PKX":"Beijing Daxing","BHD":"Belfast City","BFS":"Belfast International","BER":"Berlin","BHX":"Birmingham","BOG":"Bogotá","BOS":"Boston","BRS":"Bristol","BRU":"Brussels","OTP":"Bucharest","BUD":"Budapest","CAI":"Cairo","YYC":"Calgary","CUN":"Cancún","CPT":"Cape Town","CMN":"Casablanca","CLT":"Charlotte","ORD":"Chicago O'Hare","CPH":"Copenhagen","DFW":"Dallas/Fort Worth","DEN":"Denver","DOH":"Doha","DXB":"Dubai","DUB":"Dublin","DUS":"Düsseldorf","EDI":"Edinburgh","EXT":"Exeter","FAO":"Faro","FRA":"Frankfurt","GVA":"Geneva","GLA":"Glasgow","LPA":"Gran Canaria","CAN":"Guangzhou","HEL":"Helsinki","SGN":"Ho Chi Minh City","HKG":"Hong Kong","IAH":"Houston","HRG":"Hurghada","IST":"Istanbul","CGK":"Jakarta","JFK":"New York JFK","JNB":"Johannesburg","KUL":"Kuala Lumpur","LOS":"Lagos","ACE":"Lanzarote","LBA":"Leeds Bradford","LIS":"Lisbon","LCY":"London City","LGW":"London Gatwick","LHR":"London Heathrow","LTN":"London Luton","STN":"London Stansted","LAX":"Los Angeles","MAD":"Madrid","AGP":"Málaga","MLA":"Malta","MAN":"Manchester","MRU":"Mauritius","MEL":"Melbourne","MEX":"Mexico City","MIA":"Miami","BGY":"Milan Bergamo","MXP":"Milan Malpensa","MSP":"Minneapolis","YUL":"Montréal","DME":"Moscow Domodedovo","SVO":"Moscow Sheremetyevo","MUC":"Munich","NBO":"Nairobi","NAP":"Naples","EWR":"New York Newark","NCE":"Nice","MCO":"Orlando","OSL":"Oslo","YOW":"Ottawa","PMI":"Palma de Mallorca","CDG":"Paris Charles de Gaulle","ORY":"Paris Orly","PHL":"Philadelphia","PHX":"Phoenix","PRG":"Prague","RIX":"Riga","FCO":"Rome Fiumicino","GRU":"São Paulo","SEA":"Seattle","ICN":"Seoul Incheon","SVQ":"Seville","PVG":"Shanghai Pudong","SIN":"Singapore","SOF":"Sofia","SYD":"Sydney","TLV":"Tel Aviv","TFS":"Tenerife South","HND":"Tokyo Haneda","NRT":"Tokyo Narita","YYZ":"Toronto Pearson","YVR":"Vancouver","VCE":"Venice","VIE":"Vienna","WAW":"Warsaw","IAD":"Washington DC","ZAG":"Zagreb","ZRH":"Zurich"};
+function iataToDisplay(code) {
+  return code && AIRPORT_NAMES[code] ? `${AIRPORT_NAMES[code]} (${code})` : (code || '');
+}
+
 // ── App state ────────────────────────────────────────────────────────────────
 // Still used for in-memory rendering — Supabase is the source of truth on disk
 let S = { user: null, tripId: null, tripStart: '', tripEnd: '', flights: [], parks: [], dining: [], activities: [], settings: {} };
@@ -94,7 +108,8 @@ function showApp() {
   if (S.tripEnd) document.getElementById('tEnd').value = S.tripEnd;
   if (S.settings.name) document.getElementById('sName').value = S.settings.name;
   if (S.settings.party) document.getElementById('sParty').value = S.settings.party;
-  if (S.settings.airport) document.getElementById('sAirport').value = S.settings.airport;
+  if (S.settings.airport) document.getElementById('sAirport').value = iataToDisplay(S.settings.airport);
+  onDirChange(document.getElementById('fDir').value, false);
   renderAll(); startCd();
 }
 
@@ -148,7 +163,7 @@ async function saveSettings() {
   S.settings = {
     name: document.getElementById('sName').value,
     party: document.getElementById('sParty').value,
-    airport: document.getElementById('sAirport').value
+    airport: extractIATA(document.getElementById('sAirport').value)
   };
   // Store settings as extra columns on the trip or just keep local for now
   toast('Settings saved');
@@ -206,14 +221,15 @@ async function lookupFlight() {
     const f = flights[0];
     document.getElementById('fNum').value = raw;
     document.getElementById('fAir').value = f.airline?.name || match[1];
-    document.getElementById('fFrom').value = f.departure?.iata || '';
-    document.getElementById('fTo').value = f.arrival?.iata || '';
-
     if (f.departure?.scheduled) document.getElementById('fDep').value = toLocalDTInput(new Date(f.departure.scheduled));
     if (f.arrival?.scheduled) document.getElementById('fArr').value = toLocalDTInput(new Date(f.arrival.scheduled));
 
     const arrIata = (f.arrival?.iata || '').toUpperCase();
-    document.getElementById('fDir').value = ['MCO', 'SFB', 'ISM', 'ORL'].includes(arrIata) ? 'out' : 'ret';
+    const dir = ['MCO', 'SFB', 'ISM', 'ORL', 'MLB'].includes(arrIata) ? 'out' : 'ret';
+    document.getElementById('fDir').value = dir;
+    onDirChange(dir, false);
+    document.getElementById('fFrom').value = iataToDisplay(f.departure?.iata) || '';
+    document.getElementById('fTo').value = iataToDisplay(f.arrival?.iata) || '';
 
     toast('Flight details filled in ✦ Check and confirm before saving');
   } catch (err) {
@@ -228,13 +244,36 @@ function toLocalDTInput(date) {
   return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
 }
 
+// ── Direction toggle — auto-set To field ─────────────────────────────────────
+function onDirChange(dir, clearFields = true) {
+  const fromEl = document.getElementById('fFrom');
+  const toEl   = document.getElementById('fTo');
+  if (dir === 'out') {
+    // Outbound: From = any airport, To = Orlando area
+    fromEl.setAttribute('list', 'airportList');
+    fromEl.placeholder = 'Search airport or IATA code…';
+    toEl.setAttribute('list', 'orlandoList');
+    toEl.placeholder = 'Select Orlando airport…';
+    toEl.readOnly = false;
+    if (clearFields) { fromEl.value = ''; toEl.value = ''; }
+  } else {
+    // Return: From = Orlando area, To = any airport
+    fromEl.setAttribute('list', 'orlandoList');
+    fromEl.placeholder = 'Select Orlando airport…';
+    toEl.setAttribute('list', 'airportList');
+    toEl.placeholder = 'Search airport or IATA code…';
+    toEl.readOnly = false;
+    if (clearFields) { fromEl.value = ''; toEl.value = ''; }
+  }
+}
+
 // ── Add flight ───────────────────────────────────────────────────────────────
 async function addFlight() {
   const f = {
     dir: document.getElementById('fDir').value,
     num: document.getElementById('fNum').value.toUpperCase(),
-    from: document.getElementById('fFrom').value.toUpperCase(),
-    to: document.getElementById('fTo').value.toUpperCase(),
+    from: extractIATA(document.getElementById('fFrom').value),
+    to: extractIATA(document.getElementById('fTo').value),
     dep: document.getElementById('fDep').value,
     arr: document.getElementById('fArr').value,
     airline: document.getElementById('fAir').value
@@ -248,7 +287,9 @@ async function addFlight() {
   S.flights.push(f);
   renderFlights();
   toast('Flight added ✦');
-  ['fNum', 'fFrom', 'fTo', 'fDep', 'fArr', 'fAir'].forEach(id => document.getElementById(id).value = '');
+  ['fNum', 'fDep', 'fArr', 'fAir'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('fDir').value = 'out';
+  onDirChange('out', true);
   updateStats();
 }
 
@@ -602,5 +643,6 @@ Object.assign(window, {
   addPark, delPark, ds, dov, dl, dp,
   addDining, delDining,
   addActivity, delActivity,
-  copyLink, exportJSON, dlPDF, emailIt
+  copyLink, exportJSON, dlPDF, emailIt,
+  onDirChange
 });

@@ -149,14 +149,18 @@
         </div>
         <div class="card">
           <div class="card-hd"><div class="card-title">Add flight</div></div>
-          <div class="fg">
-            <div><label>Direction</label><select id="fDir"><option value="out">Outbound — to Orlando</option><option value="ret">Return — from Orlando</option></select></div>
+          <div class="fg3">
+            <div><label>Direction</label><select id="fDir" onchange="onDirChange(this.value)"><option value="out">Outbound — to Orlando</option><option value="ret">Return — from Orlando</option></select></div>
             <div><label>Flight number</label><input type="text" id="fNum" placeholder="BA2099"></div>
-            <div><label>From (IATA)</label><input type="text" id="fFrom" placeholder="LHR"></div>
-            <div><label>To (IATA)</label><input type="text" id="fTo" placeholder="MCO"></div>
+            <div><label>Airline</label><input type="text" id="fAir" placeholder="e.g. British Airways"></div>
+          </div>
+          <div class="fg2">
+            <div><label>From</label><input type="text" id="fFrom" list="airportList" placeholder="Search airport or IATA code…" autocomplete="off"></div>
+            <div><label>To</label><input type="text" id="fTo" list="orlandoList" placeholder="Select Orlando airport…" autocomplete="off"></div>
+          </div>
+          <div class="fg2">
             <div><label>Departure date &amp; time</label><input type="datetime-local" id="fDep"></div>
             <div><label>Arrival date &amp; time</label><input type="datetime-local" id="fArr"></div>
-            <div class="fg1"><label>Airline</label><input type="text" id="fAir" placeholder="e.g. British Airways"></div>
           </div>
           <button class="btn btn-accent" style="width:auto" onclick="addFlight()">Add flight</button>
         </div>
@@ -260,7 +264,129 @@
             <div class="card-title" style="margin-bottom:1rem">Profile</div>
             <label>Your name</label><input type="text" id="sName" placeholder="Jane Smith">
             <label>Party size</label><input type="number" id="sParty" placeholder="2" min="1">
-            <label>Home airport (IATA)</label><input type="text" id="sAirport" placeholder="e.g. LHR">
+            <label>Home airport</label><input type="text" id="sAirport" list="airportList" placeholder="Search airport or IATA code…" autocomplete="off">
+            <datalist id="airportList">
+              <option value="Aberdeen (ABZ)">
+              <option value="Abu Dhabi (AUH)">
+              <option value="Alicante (ALC)">
+              <option value="Amsterdam (AMS)">
+              <option value="Antalya (AYT)">
+              <option value="Athens (ATH)">
+              <option value="Atlanta (ATL)">
+              <option value="Barcelona (BCN)">
+              <option value="Basel (BSL)">
+              <option value="Beijing Capital (PEK)">
+              <option value="Beijing Daxing (PKX)">
+              <option value="Belfast City (BHD)">
+              <option value="Belfast International (BFS)">
+              <option value="Berlin (BER)">
+              <option value="Birmingham (BHX)">
+              <option value="Bogotá (BOG)">
+              <option value="Boston (BOS)">
+              <option value="Bristol (BRS)">
+              <option value="Brussels (BRU)">
+              <option value="Bucharest (OTP)">
+              <option value="Budapest (BUD)">
+              <option value="Cairo (CAI)">
+              <option value="Calgary (YYC)">
+              <option value="Cancún (CUN)">
+              <option value="Cape Town (CPT)">
+              <option value="Casablanca (CMN)">
+              <option value="Charlotte (CLT)">
+              <option value="Chicago O'Hare (ORD)">
+              <option value="Copenhagen (CPH)">
+              <option value="Dallas/Fort Worth (DFW)">
+              <option value="Denver (DEN)">
+              <option value="Doha (DOH)">
+              <option value="Dubai (DXB)">
+              <option value="Dublin (DUB)">
+              <option value="Düsseldorf (DUS)">
+              <option value="Edinburgh (EDI)">
+              <option value="Exeter (EXT)">
+              <option value="Faro (FAO)">
+              <option value="Frankfurt (FRA)">
+              <option value="Geneva (GVA)">
+              <option value="Glasgow (GLA)">
+              <option value="Gran Canaria (LPA)">
+              <option value="Guangzhou (CAN)">
+              <option value="Helsinki (HEL)">
+              <option value="Ho Chi Minh City (SGN)">
+              <option value="Hong Kong (HKG)">
+              <option value="Houston (IAH)">
+              <option value="Hurghada (HRG)">
+              <option value="Istanbul (IST)">
+              <option value="Jakarta (CGK)">
+              <option value="Johannesburg (JNB)">
+              <option value="Kuala Lumpur (KUL)">
+              <option value="Lagos (LOS)">
+              <option value="Lanzarote (ACE)">
+              <option value="Leeds Bradford (LBA)">
+              <option value="Lisbon (LIS)">
+              <option value="London City (LCY)">
+              <option value="London Gatwick (LGW)">
+              <option value="London Heathrow (LHR)">
+              <option value="London Luton (LTN)">
+              <option value="London Stansted (STN)">
+              <option value="Los Angeles (LAX)">
+              <option value="Madrid (MAD)">
+              <option value="Málaga (AGP)">
+              <option value="Malta (MLA)">
+              <option value="Manchester (MAN)">
+              <option value="Mauritius (MRU)">
+              <option value="Melbourne (MEL)">
+              <option value="Mexico City (MEX)">
+              <option value="Miami (MIA)">
+              <option value="Milan Bergamo (BGY)">
+              <option value="Milan Malpensa (MXP)">
+              <option value="Minneapolis (MSP)">
+              <option value="Montréal (YUL)">
+              <option value="Moscow Domodedovo (DME)">
+              <option value="Moscow Sheremetyevo (SVO)">
+              <option value="Munich (MUC)">
+              <option value="Nairobi (NBO)">
+              <option value="Naples (NAP)">
+              <option value="New York JFK (JFK)">
+              <option value="New York Newark (EWR)">
+              <option value="Nice (NCE)">
+              <option value="Orlando (MCO)">
+              <option value="Oslo (OSL)">
+              <option value="Ottawa (YOW)">
+              <option value="Palma de Mallorca (PMI)">
+              <option value="Paris Charles de Gaulle (CDG)">
+              <option value="Paris Orly (ORY)">
+              <option value="Philadelphia (PHL)">
+              <option value="Phoenix (PHX)">
+              <option value="Prague (PRG)">
+              <option value="Riga (RIX)">
+              <option value="Rome Fiumicino (FCO)">
+              <option value="São Paulo (GRU)">
+              <option value="Seattle (SEA)">
+              <option value="Seoul Incheon (ICN)">
+              <option value="Seville (SVQ)">
+              <option value="Shanghai Pudong (PVG)">
+              <option value="Singapore (SIN)">
+              <option value="Sofia (SOF)">
+              <option value="Sydney (SYD)">
+              <option value="Tel Aviv (TLV)">
+              <option value="Tenerife South (TFS)">
+              <option value="Tokyo Haneda (HND)">
+              <option value="Tokyo Narita (NRT)">
+              <option value="Toronto Pearson (YYZ)">
+              <option value="Vancouver (YVR)">
+              <option value="Venice (VCE)">
+              <option value="Vienna (VIE)">
+              <option value="Warsaw (WAW)">
+              <option value="Washington DC (IAD)">
+              <option value="Zagreb (ZAG)">
+              <option value="Zurich (ZRH)">
+            </datalist>
+            <datalist id="orlandoList">
+              <option value="Orlando International (MCO)">
+              <option value="Orlando Sanford (SFB)">
+              <option value="Orlando Melbourne International (MLB)">
+              <option value="Kissimmee Gateway (ISM)">
+              <option value="Orlando Executive (ORL)">
+            </datalist>
             <button class="btn btn-accent" style="width:auto" onclick="saveSettings()">Save settings</button>
           </div>
           <div style="border-top:1px solid var(--border);padding-top:1.25rem;margin-top:1.25rem">
