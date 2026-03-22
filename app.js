@@ -75,11 +75,12 @@ async function doSignup() {
 }
 
 // ── Sign out ─────────────────────────────────────────────────────────────────
+let loggingOut = false;
 async function logout() {
+  if (loggingOut) return;
+  loggingOut = true;
   await sb.auth.signOut();
-  S = { user: null, tripId: null, tripStart: '', tripEnd: '', flights: [], parks: [], dining: [], activities: [], settings: {} };
-  document.getElementById('authWrap').style.display = 'grid';
-  document.getElementById('mainApp').style.display = 'none';
+  window.location.href = 'index.html';
 }
 
 // ── Show the main app UI ─────────────────────────────────────────────────────
@@ -588,10 +589,7 @@ async function init() {
     document.getElementById('authWrap').style.display = 'grid';
   }
 
-  // Keep session in sync if user opens app in another tab
-  sb.auth.onAuthStateChange(async (event, session) => {
-    if (event === 'SIGNED_OUT') logout();
-  });
+  // Session state is handled by page redirect on logout
 }
 
 init();

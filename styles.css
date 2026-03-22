@@ -737,13 +737,58 @@ select option { background: var(--bg2); color: var(--text); }
   .auth-wrap { grid-template-columns: 1fr; }
   .auth-left { display: none; }
   .shell { grid-template-columns: 1fr; }
-  .sidebar { position: static; height: auto; flex-direction: row; overflow-x: auto; padding: 0.5rem; border-right: none; border-bottom: 1px solid var(--border); }
+
+  /* Sidebar becomes a fixed-height horizontal scrolling tab bar */
+  .sidebar {
+    position: sticky;
+    top: 54px;
+    z-index: 100;
+    height: 48px;
+    min-height: 48px;
+    max-height: 48px;
+    flex-direction: row;
+    align-items: center;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 0 0.5rem;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    gap: 2px;
+    /* Hide scrollbar but keep scrollable */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .sidebar::-webkit-scrollbar { display: none; }
+
   .sidegroup { display: contents; }
   .sidelabel { display: none; }
-  .sideitem { white-space: nowrap; padding: 0.45rem 0.75rem; }
-  .main { padding: 1.25rem; }
+
+  /* Tab items — fixed height, never wrap */
+  .sideitem {
+    white-space: nowrap;
+    padding: 0 0.85rem;
+    height: 36px;
+    min-height: 36px;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.8rem;
+  }
+
+  /* Hide icon on very small screens to save space */
+  @media(max-width:400px) {
+    .side-icon { display: none; }
+  }
+
+  .conf-badge { font-size: 0.55rem; padding: 1px 4px; }
+
+  .main { padding: 1rem; }
   .fg { grid-template-columns: 1fr; }
   .fg1 { grid-column: 1; }
   .countdown { flex-direction: column; align-items: flex-start; gap: 1rem; }
   .cd-right { text-align: left; }
+  .stats { grid-template-columns: repeat(3, 1fr); }
+  .phead { flex-direction: column; }
+  .phead .btn { width: 100% !important; }
+  .share-grid { grid-template-columns: repeat(2, 1fr); }
 }
