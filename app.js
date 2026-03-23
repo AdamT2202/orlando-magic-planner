@@ -725,3 +725,85 @@ Object.assign(window, {
   onDirChange,
   confirmDeleteAccount, closeDeleteModal, doDeleteAccount
 });
+
+function getWeatherIcon(code) {
+  if (code === 0) return "☀️"; // Clear sky
+  if ([1, 2].includes(code)) return "🌤️"; // Mainly clear / partly cloudy
+  if (code === 3) return "☁️"; // Overcast
+  if ([45, 48].includes(code)) return "🌫️"; // Fog
+  if ([51, 53, 55, 56, 57].includes(code)) return "🌦️"; // Drizzle
+  if ([61, 63, 65, 66, 67, 80, 81, 82].includes(code)) return "🌧️"; // Rain
+  if ([71, 73, 75, 77, 85, 86].includes(code)) return "❄️"; // Snow
+  if ([95, 96, 99].includes(code)) return "⛈️"; // Thunderstorm
+  return "🌍";
+}
+
+function getWeatherLabel(code) {
+  if (code === 0) return "Sunny";
+  if ([1, 2].includes(code)) return "Partly cloudy";
+  if (code === 3) return "Cloudy";
+  if ([45, 48].includes(code)) return "Foggy";
+  if ([51, 53, 55, 56, 57].includes(code)) return "Drizzly";
+  if ([61, 63, 65, 66, 67, 80, 81, 82].includes(code)) return "Rainy";
+  if ([71, 73, 75, 77, 85, 86].includes(code)) return "Snowy";
+  if ([95, 96, 99].includes(code)) return "Stormy";
+  return "Mixed weather";
+}
+
+function formatDay(dateString) {
+  const date = new Date(dateString);
+  return date.toLocaleDateString('en-GB', {
+    weekday: 'short',
+    day: 'numeric',
+    month: 'short'
+  });
+}
+
+
+// Live weather 
+async function loadWeather() {
+  const weatherCard = document.getElementById('weatherCard');
+  if (!weatherCard) return;
+
+  try {
+    const res = await fetch(
+      'https://api.open-meteo.com/v1/forecast?latitude=28.5383&longitude=-81.3792&daily=weathercode,temperature_2m_max,temperature_2m_min&timezone=America%2FNew_York&forecast_days=7'
+    );
+
+    if (!res.ok) throw new Error('Weather request failed');
+
+    const data = await res.json();
+    const daily = data.daily;
+
+    if (!daily || !daily.time) throw new Error('No forecast data returned');
+
+    let html = '';
+
+    for (let i = 0; i < daily.time.length; i++) {
+      html += `
+        <div class="weather-day">
+          <div class="weather-day-top">
+            <div class="weather-date">${formatDay(daily.time[i])}</div>
+            <div class="weather-icon">${getWeatherIcon(daily.weathercode[i])}</div>
+          </div>
+          <div class="weather-label">${getWeatherLabel(daily.weathercode[i])}</div>
+          <div class="weather-temps">
+            <span class="temp-max">${Math.round(daily.temperature_2m_max[i])}°</span>
+            <span class="temp-min">${Math.round(daily.temperature_2m_min[i])}°</span>
+          </div>
+        </div>
+      `;
+    }
+
+    weatherCard.innerHTML = html;
+  } catch (err) {
+    console.error(err);
+    weatherCard.innerHTML = `
+      <div class="empty">
+        <p>Could not load weather right now.</p>
+      </div>
+    `;
+  }
+}
+
+document.addEventListener('DOMContentLoaded', loadWeather);
