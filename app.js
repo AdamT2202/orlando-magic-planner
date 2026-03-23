@@ -807,3 +807,37 @@ async function loadWeather() {
 }
 
 document.addEventListener('DOMContentLoaded', loadWeather);
+
+// Password Reset Modal
+function openForgotModal() {
+  document.getElementById('forgotModal').style.display = 'flex';
+}
+
+function closeForgotModal() {
+  document.getElementById('forgotModal').style.display = 'none';
+}
+
+async function sendResetEmail() {
+  const email = document.getElementById('forgotEmail').value;
+  const msg = document.getElementById('forgotMessage');
+
+  if (!email) {
+    msg.textContent = "Please enter your email";
+    return;
+  }
+
+  const { data, error } = await sb.auth.resetPasswordForEmail(email, {
+    redirectTo: "https://yourdomain.com/reset-password"
+  });
+
+  if (error) {
+    msg.textContent = error.message;
+  } else {
+    msg.textContent = "Reset link sent. Check your inbox.";
+  }
+}
+
+window.openForgotModal = openForgotModal;
+window.closeForgotModal = closeForgotModal;
+window.sendResetEmail = sendResetEmail;
+
