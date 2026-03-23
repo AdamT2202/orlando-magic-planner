@@ -173,6 +173,7 @@
           <div id="dashUpcoming"></div>
         </div>
       <!--Coming Up Card-->
+      </div><!-- /#sec-dashboard -->
 
       <!-- FLIGHTS -->
       <div class="section" id="sec-flights">
@@ -449,7 +450,7 @@
   // If landing page linked here with #signup, open the signup tab
   if (window.location.hash === '#signup') {
     document.addEventListener('DOMContentLoaded', () => {
-      if (typeof switchTab === 'function') switchTab('signup');
+      if (typeof window.switchTab === 'function') window.switchTab('signup');
     });
   }
 </script>
