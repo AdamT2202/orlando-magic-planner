@@ -123,8 +123,16 @@
             <div class="cd-info" id="cdInfo">to start the countdown</div>
           </div>
         </div>
-        
-        <!--Weather App-->
+      <!--Stats Cards-->
+        <div class="stats">
+          <div class="stat"><div class="stat-lbl">Flights</div><div class="stat-val" id="stF">0</div><div class="stat-sub">booked</div></div>
+          <div class="stat"><div class="stat-lbl">Parks</div><div class="stat-val" id="stP">0</div><div class="stat-sub">planned</div></div>
+          <div class="stat"><div class="stat-lbl">Dining</div><div class="stat-val" id="stD">0</div><div class="stat-sub">reservations</div></div>
+          <div class="stat"><div class="stat-lbl">Activities</div><div class="stat-val" id="stA">0</div><div class="stat-sub">added</div></div>
+          <div class="stat click" onclick="nav('conflicts')"><div class="stat-lbl">Conflicts</div><div class="stat-val" id="stC" style="color:var(--red)">0</div><div class="stat-sub">to resolve</div></div>
+        </div>
+      <!--Stats Cards-->
+      <!--Weather App-->
         <div class="card">
           <div class="card-hd">
             <div class="card-title">Orlando 7-Day Weather</div>
@@ -135,20 +143,14 @@
             </div>
           </div>
         </div>
-        <!--Weather App End-->
+      <!--Weather App End-->
 
-        <div class="stats">
-          <div class="stat"><div class="stat-lbl">Flights</div><div class="stat-val" id="stF">0</div><div class="stat-sub">booked</div></div>
-          <div class="stat"><div class="stat-lbl">Parks</div><div class="stat-val" id="stP">0</div><div class="stat-sub">planned</div></div>
-          <div class="stat"><div class="stat-lbl">Dining</div><div class="stat-val" id="stD">0</div><div class="stat-sub">reservations</div></div>
-          <div class="stat"><div class="stat-lbl">Activities</div><div class="stat-val" id="stA">0</div><div class="stat-sub">added</div></div>
-          <div class="stat click" onclick="nav('conflicts')"><div class="stat-lbl">Conflicts</div><div class="stat-val" id="stC" style="color:var(--red)">0</div><div class="stat-sub">to resolve</div></div>
-        </div>
+      <!--Coming Up Card-->
         <div class="card">
           <div class="card-hd"><div class="card-title">Coming up</div></div>
           <div id="dashUpcoming"></div>
         </div>
-      </div>
+      <!--Coming Up Card-->
 
       <!-- FLIGHTS -->
       <div class="section" id="sec-flights">
