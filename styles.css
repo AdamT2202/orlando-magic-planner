@@ -321,7 +321,7 @@ select option { background: var(--bg2); color: var(--text); }
 
 /* ── LAYOUT ── */
 .shell {
-  display: grid;
+  display: block;
   grid-template-columns: 220px 1fr;
   min-height: calc(100vh - 56px);
 }
