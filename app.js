@@ -996,7 +996,7 @@ async function sendResetEmail() {
   }
 
   const { data, error } = await sb.auth.resetPasswordForEmail(email, {
-    redirectTo: "https://yourdomain.com/reset-password"
+    redirectTo: "https://orlandomagicplanner.com/reset-password.html"
   });
 
   if (error) {
