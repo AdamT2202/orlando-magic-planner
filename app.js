@@ -185,25 +185,36 @@ async function loadFromDB() {
   S.tripStart = trip.start_date || '';
   S.tripEnd = trip.end_date || '';
 
-  // Load all events for this trip
-  const { data: events } = await sb.from('events').select('*').eq('trip_id', S.tripId).order('date').order('time');
+// Load all events for this trip
+const { data: events } = await sb
+  .from('events')
+  .select('*')
+  .eq('trip_id', S.tripId)
+  .order('date')
+  .order('time');
 
-  S.flights = [];
-  S.parks = [];
-  S.dining = [];
-  S.activities = [];
+S.flights = [];
+S.parks = [];
+S.dining = [];
+S.activities = [];
+S.hotel = [];        // ← REQUIRED
+S.carhire = [];      // ← REQUIRED
+S.checklists = [];   // ← REQUIRED
 
-  (events || []).forEach(e => {
+(events || []).forEach(e => {
   const item = { id: e.id, date: e.date, time: e.time, ...e.metadata };
 
   if (e.type === 'flight') S.flights.push(item);
   else if (e.type === 'park') S.parks.push(item);
   else if (e.type === 'dining') S.dining.push(item);
   else if (e.type === 'activity') S.activities.push(item);
-  else if (e.type === 'hotel') S.hotel.push(item);          // ← NEW
-  else if (e.type === 'carhire') S.carhire.push(item);      // ← NEW
-  else if (e.type === 'checklist') S.checklists.push(item); // ← NEW
+  else if (e.type === 'hotel') S.hotel.push(item);
+  else if (e.type === 'carhire') S.carhire.push(item);
+  else if (e.type === 'checklist') S.checklists.push(item);
 });
+ renderHotel();
+  renderChecklists();
+renderCarHire();
 
 }
 
