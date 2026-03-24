@@ -396,6 +396,84 @@ async function delDining(id) {
   renderDining(); updateStats();
 }
 
+// ── Add car hire ─────────────────────────────────────────────────────────────
+async function addCarHire() {
+  const r = {
+    company: document.getElementById('cCompany').value,
+    pickup: document.getElementById('cPickup').value,
+    pickupDate: document.getElementById('cPickupDate').value,
+    dropDate: document.getElementById('cDropDate').value,
+    type: document.getElementById('cType').value,
+    conf: document.getElementById('cConf').value
+  };
+
+  if (!r.company || !r.pickupDate) {
+    toast('Company and pickup date required');
+    return;
+  }
+
+  const id = await saveEvent('carhire', r, r.pickupDate, '00:00');
+  if (!id) return;
+
+  r.id = id;
+  S.carhire.push(r);
+  S.carhire.sort((a, b) => (a.pickupDate).localeCompare(b.pickupDate));
+
+  renderCarHire();
+  toast('Car hire added ✦');
+
+  ['cCompany','cPickup','cPickupDate','cDropDate','cType','cConf']
+    .forEach(id => document.getElementById(id).value = '');
+
+  updateStats();
+}
+
+async function delCarHire(id) {
+  await deleteEvent(id);
+  S.carhire = S.carhire.filter(x => x.id !== id);
+  renderCarHire();
+  updateStats();
+}
+
+// ── Add hotel ───────────────────────────────────────────────────────────────
+async function addHotel() {
+  const r = {
+    name: document.getElementById('hName').value,
+    loc: document.getElementById('hLoc').value,
+    checkin: document.getElementById('hIn').value,
+    checkout: document.getElementById('hOut').value,
+    guests: document.getElementById('hGuests').value,
+    conf: document.getElementById('hConf').value
+  };
+
+  if (!r.name || !r.checkin) {
+    toast('Hotel name and check‑in date required');
+    return;
+  }
+
+  const id = await saveEvent('hotel', r, r.checkin, '00:00');
+  if (!id) return;
+
+  r.id = id;
+  S.hotel.push(r);
+  S.hotel.sort((a, b) => (a.checkin).localeCompare(b.checkin));
+
+  renderHotel();
+  toast('Hotel stay added ✦');
+
+  ['hName','hLoc','hIn','hOut','hGuests','hConf']
+    .forEach(id => document.getElementById(id).value = '');
+
+  updateStats();
+}
+
+async function delHotel(id) {
+  await deleteEvent(id);
+  S.hotel = S.hotel.filter(x => x.id !== id);
+  renderHotel();
+  updateStats();
+}
+
 // ── Add activity ─────────────────────────────────────────────────────────────
 async function addActivity() {
   const a = {
@@ -654,12 +732,18 @@ function renderConflictsFull() {
 }
 
 function updateStats() {
-  document.getElementById('stF').textContent = S.flights.length;
-  document.getElementById('stP').textContent = S.parks.length;
-  document.getElementById('stD').textContent = S.dining.length;
-  document.getElementById('stA').textContent = S.activities.length;
-  updateDash(); renderDashUpcoming(); updateConflicts();
+  document.getElementById('stF').textContent  = S.flights.length;
+  document.getElementById('stH').textContent  = S.hotel.length;
+  document.getElementById('stP').textContent  = S.parks.length;
+  document.getElementById('stD').textContent  = S.dining.length;
+  document.getElementById('stA').textContent  = S.activities.length;
+  document.getElementById('stCH').textContent = S.carhire.length;
+
+  updateDash();
+  renderDashUpcoming();
+  updateConflicts();
 }
+
 
 function renderDashUpcoming() {
   const el = document.getElementById('dashUpcoming');

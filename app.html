@@ -94,29 +94,65 @@
   </div>
 
   <div class="shell">
-    <aside class="sidebar">
-      <div class="sidegroup">
-        <div class="sidelabel">Planning</div>
-        <button class="sideitem active" onclick="nav('dashboard')"><span class="side-icon">◈</span>Dashboard</button>
-        <button class="sideitem" onclick="nav('flights')"><span class="side-icon">✈</span>Flights</button>
-        <button class="sideitem" onclick="nav('parks')"><span class="side-icon">⊛</span>Theme parks</button>
-        <button class="sideitem" onclick="nav('dining')"><span class="side-icon">⊡</span>Dining</button>
-        <button class="sideitem" onclick="nav('activities')"><span class="side-icon">◎</span>Activities</button>
-      </div>
-      <div class="sidegroup">
-        <div class="sidelabel">Review</div>
-        <button class="sideitem" onclick="nav('timeline')"><span class="side-icon">⊟</span>Timeline</button>
-        <button class="sideitem" onclick="nav('conflicts')">
-          <span class="side-icon">⚠</span>Conflicts
-          <span class="conf-badge" id="confBadge">0</span>
-        </button>
-        <button class="sideitem" onclick="nav('share')"><span class="side-icon">↑</span>Share trip</button>
-      </div>
-      <div class="sidegroup">
-        <div class="sidelabel">Account</div>
-        <button class="sideitem" onclick="nav('settings')"><span class="side-icon">⊕</span>Settings</button>
-      </div>
-    </aside>
+<aside class="sidebar">
+  <div class="sidegroup">
+    <div class="sidelabel">Planning</div>
+
+    <button class="sideitem active" onclick="nav('dashboard')">
+      <span class="side-icon">◈</span>Dashboard
+    </button>
+
+    <button class="sideitem" onclick="nav('flights')">
+      <span class="side-icon">✈</span>Flights
+    </button>
+
+    <button class="sideitem" onclick="nav('hotel')">
+      <span class="side-icon">⌂</span>Hotels
+    </button>
+
+    <button class="sideitem" onclick="nav('parks')">
+      <span class="side-icon">⊛</span>Theme parks
+    </button>
+
+    <button class="sideitem" onclick="nav('dining')">
+      <span class="side-icon">⊡</span>Dining
+    </button>
+
+    <button class="sideitem" onclick="nav('activities')">
+      <span class="side-icon">◎</span>Activities
+    </button>
+
+    <button class="sideitem" onclick="nav('carhire')">
+      <span class="side-icon">➤</span>Car Hire
+    </button>
+  </div>
+
+  <div class="sidegroup">
+    <div class="sidelabel">Review</div>
+
+    <button class="sideitem" onclick="nav('timeline')">
+      <span class="side-icon">⊟</span>Timeline
+    </button>
+
+    <button class="sideitem" onclick="nav('conflicts')">
+      <span class="side-icon">⚠</span>Conflicts
+      <span class="conf-badge" id="confBadge">0</span>
+    </button>
+
+    <button class="sideitem" onclick="nav('share')">
+      <span class="side-icon">↑</span>Share trip
+    </button>
+  </div>
+
+  <div class="sidegroup">
+    <div class="sidelabel">Account</div>
+
+    <button class="sideitem" onclick="nav('settings')">
+      <span class="side-icon">⊕</span>Settings
+    </button>
+  </div>
+</aside>
+
 
     <main class="main">
 
@@ -146,14 +182,51 @@
           </div>
         </div>
       <!--Stats Cards-->
-        <div class="stats">
-          <div class="stat"><div class="stat-lbl">Flights</div><div class="stat-val" id="stF">0</div><div class="stat-sub">booked</div></div>
-          <div class="stat"><div class="stat-lbl">Parks</div><div class="stat-val" id="stP">0</div><div class="stat-sub">planned</div></div>
-          <div class="stat"><div class="stat-lbl">Dining</div><div class="stat-val" id="stD">0</div><div class="stat-sub">reservations</div></div>
-          <div class="stat"><div class="stat-lbl">Activities</div><div class="stat-val" id="stA">0</div><div class="stat-sub">added</div></div>
-          <div class="stat click" onclick="nav('conflicts')"><div class="stat-lbl">Conflicts</div><div class="stat-val" id="stC" style="color:var(--red)">0</div><div class="stat-sub">to resolve</div></div>
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-lbl">Flights</div>
+          <div class="stat-val" id="stF">0</div>
+          <div class="stat-sub">booked</div>
         </div>
+
+        <div class="stat">
+          <div class="stat-lbl">Hotels</div>
+          <div class="stat-val" id="stH">0</div>
+          <div class="stat-sub">reserved</div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-lbl">Parks</div>
+          <div class="stat-val" id="stP">0</div>
+          <div class="stat-sub">planned</div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-lbl">Dining</div>
+          <div class="stat-val" id="stD">0</div>
+          <div class="stat-sub">reservations</div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-lbl">Activities</div>
+          <div class="stat-val" id="stA">0</div>
+          <div class="stat-sub">added</div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-lbl">Car Hire</div>
+          <div class="stat-val" id="stCH">0</div>
+          <div class="stat-sub">booked</div>
+        </div>
+
+        <div class="stat click" onclick="nav('conflicts')">
+          <div class="stat-lbl">Conflicts</div>
+          <div class="stat-val" id="stC" style="color:var(--red)">0</div>
+          <div class="stat-sub">to resolve</div>
+        </div>
+      </div>
       <!--Stats Cards-->
+
       <!--Weather App-->
         <div class="card">
           <div class="card-hd">
@@ -204,6 +277,31 @@
           <button class="btn btn-accent" style="width:auto" onclick="addFlight()">Add flight</button>
         </div>
         <div id="flightsList"></div>
+      </div>
+
+      <!-- HOTEL RESERVATION -->
+      <div class="section" id="sec-hotel">
+        <div class="phead">
+          <div>
+            <div class="ptitle">Hotel Reservation</div>
+            <div class="psub">Accommodation details</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-hd"><div class="card-title">Add hotel</div></div>
+          <div class="fg">
+            <div><label>Hotel name</label><input type="text" id="hName" placeholder="e.g. Pop Century"></div>
+            <div><label>Location</label><input type="text" id="hLoc" placeholder="e.g. Walt Disney World"></div>
+            <div><label>Check-in date</label><input type="date" id="hIn"></div>
+            <div><label>Check-out date</label><input type="date" id="hOut"></div>
+            <div><label>Guests</label><input type="number" id="hGuests" placeholder="2" min="1"></div>
+            <div><label>Confirmation #</label><input type="text" id="hConf" placeholder="ABC-12345"></div>
+          </div>
+          <button class="btn btn-accent" style="width:auto" onclick="addHotel()">Add hotel</button>
+        </div>
+
+        <div id="hotelList"></div>
       </div>
 
       <!-- PARKS -->
@@ -257,6 +355,31 @@
           <button class="btn btn-accent" style="width:auto" onclick="addActivity()">Add activity</button>
         </div>
         <div id="activitiesList"></div>
+      </div>
+
+      <!-- CAR HIRE -->
+      <div class="section" id="sec-carhire">
+        <div class="phead">
+          <div>
+            <div class="ptitle">Car Hire</div>
+            <div class="psub">Vehicle rental details</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-hd"><div class="card-title">Add car hire</div></div>
+          <div class="fg">
+            <div><label>Company</label><input type="text" id="cCompany" placeholder="e.g. Alamo"></div>
+            <div><label>Pickup location</label><input type="text" id="cPickup" placeholder="e.g. Orlando Airport"></div>
+            <div><label>Pickup date</label><input type="date" id="cPickupDate"></div>
+            <div><label>Drop-off date</label><input type="date" id="cDropDate"></div>
+            <div><label>Car type</label><input type="text" id="cType" placeholder="e.g. SUV"></div>
+            <div><label>Confirmation #</label><input type="text" id="cConf" placeholder="ABC-12345"></div>
+          </div>
+          <button class="btn btn-accent" style="width:auto" onclick="addCarHire()">Add car hire</button>
+        </div>
+
+        <div id="carHireList"></div>
       </div>
 
       <!-- TIMELINE -->
