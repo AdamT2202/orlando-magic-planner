@@ -22,7 +22,20 @@ function iataToDisplay(code) {
 
 // ── App state ────────────────────────────────────────────────────────────────
 // Still used for in-memory rendering — Supabase is the source of truth on disk
-let S = { user: null, tripId: null, tripStart: '', tripEnd: '', flights: [], parks: [], dining: [], activities: [], settings: {} };
+let S = { 
+  user: null, 
+  tripId: null, 
+  tripStart: '', 
+  tripEnd: '', 
+  flights: [], 
+  parks: [], 
+  dining: [], 
+  activities: [], 
+  carhire: [],     // ← add this
+  hotel: [],       // ← and this
+  settings: {} 
+};
+
 let dragSrc = null;
 const aIcons = { attraction: '🎡', shopping: '🛍', show: '🎭', transport: '🚌', hotel: '🏨', other: '📌' };
 
@@ -435,6 +448,36 @@ async function delCarHire(id) {
   updateStats();
 }
 
+function renderCarHire() {
+  const list = document.getElementById('carHireList');
+  list.innerHTML = '';
+
+  S.carhire.forEach(r => {
+    const div = document.createElement('div');
+    div.className = 'item';
+
+    const dateRange = `${fmtL(r.pickupDate)} → ${fmtL(r.dropDate)}`;
+
+    div.innerHTML = `
+      <div class="item-icon ico-navy">➤</div>
+      <div class="item-body">
+        <div class="item-name">${r.company}</div>
+        <div class="item-meta">
+          ${dateRange}<br>
+          ${r.pickup}${r.type ? ' · ' + r.type : ''}${r.conf ? ' · ' + r.conf : ''}
+        </div>
+      </div>
+      <button class="del-btn" onclick="delCarHire('${r.id}')">✕</button>
+    `;
+
+    list.appendChild(div);
+  });
+}
+
+
+
+
+
 // ── Add hotel ───────────────────────────────────────────────────────────────
 async function addHotel() {
   const r = {
@@ -473,6 +516,35 @@ async function delHotel(id) {
   renderHotel();
   updateStats();
 }
+
+function renderHotel() {
+  const list = document.getElementById('hotelList');
+  list.innerHTML = '';
+
+  S.hotel.forEach(r => {
+    const div = document.createElement('div');
+    div.className = 'item';
+
+    const dateRange = `${fmtL(r.checkin)} → ${fmtL(r.checkout)}`;
+
+    div.innerHTML = `
+      <div class="item-icon ico-purple">⌂</div>
+      <div class="item-body">
+        <div class="item-name">${r.name}</div>
+        <div class="item-meta">
+          ${dateRange}<br>
+          ${r.loc}${r.room ? ' · ' + r.room : ''}${r.conf ? ' · ' + r.conf : ''}
+        </div>
+      </div>
+      <button class="del-btn" onclick="delHotel('${r.id}')">✕</button>
+    `;
+
+    list.appendChild(div);
+  });
+}
+
+
+
 
 // ── Add activity ─────────────────────────────────────────────────────────────
 async function addActivity() {
@@ -804,10 +876,13 @@ Object.assign(window, {
   addPark, delPark, ds, dov, dl, dp,
   addDining, delDining,
   addActivity, delActivity,
+  addHotel, delHotel,        // ← NEW
+  addCarHire, delCarHire,    // ← NEW
   copyLink, exportJSON, dlPDF, emailIt,
   onDirChange,
   confirmDeleteAccount, closeDeleteModal, doDeleteAccount
 });
+
 
 function getWeatherIcon(code) {
   if (code === 0) return "☀️"; // Clear sky
