@@ -33,6 +33,7 @@ let S = {
   activities: [], 
   carhire: [],     // ← add this
   hotel: [],       // ← and this
+  checklists: [],     // ← and this
   settings: {} 
 };
 
@@ -193,12 +194,17 @@ async function loadFromDB() {
   S.activities = [];
 
   (events || []).forEach(e => {
-    const item = { id: e.id, date: e.date, time: e.time, ...e.metadata };
-    if (e.type === 'flight') S.flights.push(item);
-    else if (e.type === 'park') S.parks.push(item);
-    else if (e.type === 'dining') S.dining.push(item);
-    else if (e.type === 'activity') S.activities.push(item);
-  });
+  const item = { id: e.id, date: e.date, time: e.time, ...e.metadata };
+
+  if (e.type === 'flight') S.flights.push(item);
+  else if (e.type === 'park') S.parks.push(item);
+  else if (e.type === 'dining') S.dining.push(item);
+  else if (e.type === 'activity') S.activities.push(item);
+  else if (e.type === 'hotel') S.hotel.push(item);          // ← NEW
+  else if (e.type === 'carhire') S.carhire.push(item);      // ← NEW
+  else if (e.type === 'checklist') S.checklists.push(item); // ← NEW
+});
+
 }
 
 // ── Save trip dates to Supabase ──────────────────────────────────────────────
@@ -880,7 +886,12 @@ Object.assign(window, {
   addCarHire, delCarHire,    // ← NEW
   copyLink, exportJSON, dlPDF, emailIt,
   onDirChange,
-  confirmDeleteAccount, closeDeleteModal, doDeleteAccount
+  confirmDeleteAccount, closeDeleteModal, doDeleteAccount,
+  addChecklist,
+delChecklist,
+toggleChecklist,
+renderChecklists,
+
 });
 
 
@@ -1017,7 +1028,63 @@ function initCountdownLink() {
   cdTrip.style.cursor = "pointer";
   cdTrip.onclick = () => nav("settings");
 }
-
-
-
 initCountdownLink();
+
+// Add Checklist
+async function addChecklist() {
+  const name = document.getElementById('clName').value.trim();
+  if (!name) return toast('Enter a checklist item');
+
+  const r = { name, done: false };
+
+  const id = await saveEvent('checklist', r, S.tripStart || '2000-01-01', '00:00');
+  if (!id) return;
+
+  r.id = id;
+  S.checklists.push(r);
+
+  renderChecklists();
+  document.getElementById('clName').value = '';
+  updateStats();
+}
+
+async function delChecklist(id) {
+  await deleteEvent(id);
+  S.checklists = S.checklists.filter(x => x.id !== id);
+  renderChecklists();
+  updateStats();
+}
+
+async function toggleChecklist(id) {
+  const item = S.checklists.find(x => x.id === id);
+  item.done = !item.done;
+
+  await saveEvent('checklist', item, S.tripStart || '2000-01-01', '00:00', id);
+  renderChecklists();
+}
+
+function renderChecklists() {
+  const list = document.getElementById('checklistList');
+  list.innerHTML = '';
+
+  S.checklists.forEach(r => {
+    const div = document.createElement('div');
+    div.className = 'item';
+
+    div.innerHTML = `
+      <div class="item-icon ico-green">${r.done ? '✔' : '☐'}</div>
+      <div class="item-body">
+        <div class="item-name" style="${r.done ? 'text-decoration:line-through; opacity:0.6' : ''}">
+          ${r.name}
+        </div>
+      </div>
+      <button class="del-btn" onclick="delChecklist('${r.id}')">✕</button>
+    `;
+
+    div.querySelector('.item-icon').onclick = () => toggleChecklist(r.id);
+
+    list.appendChild(div);
+  });
+}
+
+

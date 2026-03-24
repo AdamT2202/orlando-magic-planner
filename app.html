@@ -125,6 +125,10 @@
     <button class="sideitem" onclick="nav('carhire')">
       <span class="side-icon">➤</span>Car Hire Reservations
     </button>
+
+    <button class="sideitem" onclick="nav('checklists')">
+      <span class="side-icon">☑</span>Checklists
+    </button>
   </div>
 
   <div class="sidegroup">
@@ -346,7 +350,7 @@
         <div class="card">
           <div class="card-hd"><div class="card-title">Add activity</div></div>
           <div class="fg">
-            <div><label>Activity name</label><input type="text" id="aName" placeholder="e.g. Kennedy Space Center, Halloween Horror Nights, etc."></div>
+            <div><label>Activity name</label><input type="text" id="aName" placeholder="e.g. Disney Springs, Kennedy Space Center, Halloween Horror Nights etc."></div>
             <div><label>Category</label><select id="aType"><option value="attraction">🎡 Attraction</option><option value="shopping">🛍 Shopping</option><option value="show">🎭 Show</option><option value="transport">🚌 Transport</option><option value="afterhours">👻 After Hours Event</option><option value="other">📌 Other</option></select></div>
             <div><label>Date</label><input type="date" id="aDate"></div>
             <div><label>Time</label><input type="time" id="aTime"></div>
@@ -381,6 +385,33 @@
 
         <div id="carHireList"></div>
       </div>
+
+        <!-- CHECKLISTS -->
+        <div class="section" id="sec-checklists">
+          <div class="phead">
+            <div>
+              <div class="ptitle">Checklists</div>
+              <div class="psub">Trip tasks & reminders</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-hd">
+              <div class="card-title">Add checklist item</div>
+            </div>
+
+            <div class="fg">
+              <div class="fg1">
+                <label>Item</label>
+                <input id="clName" type="text" placeholder="e.g. Pack sunscreen">
+              </div>
+            </div>
+
+            <button class="btn btn-accent" style="width:auto" onclick="addChecklist()">Add item</button>
+          </div>
+
+          <div id="checklistList"></div>
+        </div>
 
       <!-- TIMELINE -->
       <div class="section" id="sec-timeline">
