@@ -103,11 +103,11 @@
     </button>
 
     <button class="sideitem" onclick="nav('flights')">
-      <span class="side-icon">✈</span>Flights
+      <span class="side-icon">✈</span>Flight Reservations
     </button>
 
     <button class="sideitem" onclick="nav('hotel')">
-      <span class="side-icon">⌂</span>Hotels
+      <span class="side-icon">⌂</span>Hotel Reservations
     </button>
 
     <button class="sideitem" onclick="nav('parks')">
@@ -123,7 +123,7 @@
     </button>
 
     <button class="sideitem" onclick="nav('carhire')">
-      <span class="side-icon">➤</span>Car Hire
+      <span class="side-icon">➤</span>Car Hire Reservations
     </button>
   </div>
 
@@ -250,7 +250,7 @@
 
       <!-- FLIGHTS -->
       <div class="section" id="sec-flights">
-        <div class="phead"><div><div class="ptitle">Flights</div><div class="psub">Inbound and return journeys</div></div></div>
+        <div class="phead"><div><div class="ptitle">Flight Reservations</div><div class="psub">Inbound and return journeys</div></div></div>
         <!--<div class="card">
           <div class="card-hd"><div class="card-title">Flight lookup</div><span class="badge b-blue">Auto-fill</span></div>
           <p style="font-size:0.8rem;color:var(--text2);margin-bottom:1rem;margin-top:-0.5rem">Enter your flight number to auto-fill airline, route and times. Use the format <strong style="color:var(--text)">BA2099</strong> — airline code then number. Results will populate the form below.</p>
@@ -283,7 +283,7 @@
       <div class="section" id="sec-hotel">
         <div class="phead">
           <div>
-            <div class="ptitle">Hotel Reservation</div>
+            <div class="ptitle">Hotel Reservations</div>
             <div class="psub">Accommodation details</div>
           </div>
         </div>
@@ -346,8 +346,8 @@
         <div class="card">
           <div class="card-hd"><div class="card-title">Add activity</div></div>
           <div class="fg">
-            <div><label>Activity name</label><input type="text" id="aName" placeholder="e.g. Kennedy Space Center"></div>
-            <div><label>Category</label><select id="aType"><option value="attraction">🎡 Attraction</option><option value="shopping">🛍 Shopping</option><option value="show">🎭 Show</option><option value="transport">🚌 Transport</option><option value="hotel">🏨 Hotel</option><option value="other">📌 Other</option></select></div>
+            <div><label>Activity name</label><input type="text" id="aName" placeholder="e.g. Kennedy Space Center, Halloween Horror Nights, etc."></div>
+            <div><label>Category</label><select id="aType"><option value="attraction">🎡 Attraction</option><option value="shopping">🛍 Shopping</option><option value="show">🎭 Show</option><option value="transport">🚌 Transport</option><option value="afterhours">👻 After Hours Event</option><option value="other">📌 Other</option></select></div>
             <div><label>Date</label><input type="date" id="aDate"></div>
             <div><label>Time</label><input type="time" id="aTime"></div>
             <div class="fg1"><label>Notes</label><input type="text" id="aNotes" placeholder="e.g. Pre-book tickets"></div>
@@ -361,7 +361,7 @@
       <div class="section" id="sec-carhire">
         <div class="phead">
           <div>
-            <div class="ptitle">Car Hire</div>
+            <div class="ptitle">Car Hire Reservations</div>
             <div class="psub">Vehicle rental details</div>
           </div>
         </div>
