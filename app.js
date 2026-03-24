@@ -481,7 +481,6 @@ function updateCd() {
   document.getElementById('cdD').textContent = Math.floor(diff / 864e5);
   document.getElementById('cdH').textContent = Math.floor((diff % 864e5) / 36e5);
   document.getElementById('cdM').textContent = Math.floor((diff % 36e5) / 6e4);
-  document.getElementById('cdTrip').textContent = 'Orlando trip';
   document.getElementById('cdInfo').textContent = 'Departing ' + fmtL(S.tripStart);
 }
 
@@ -841,3 +840,25 @@ window.openForgotModal = openForgotModal;
 window.closeForgotModal = closeForgotModal;
 window.sendResetEmail = sendResetEmail;
 
+// Trip Settings
+function initCountdownLink() {
+  const cdTrip = document.getElementById("cdTrip");
+  const cdInfo = document.getElementById("cdInfo");
+
+  const hasDates = Boolean(S.tripStart && S.tripEnd);
+
+  if (hasDates) {
+    cdTrip.textContent = "Edit trip dates";
+    cdInfo.textContent = "in Settings";
+  } else {
+    cdTrip.textContent = "Edit trip dates";
+    cdInfo.textContent = "to start the countdown";
+  }
+
+  cdTrip.style.cursor = "pointer";
+  cdTrip.onclick = () => nav("settings");
+}
+
+
+
+initCountdownLink();
