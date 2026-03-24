@@ -427,16 +427,14 @@
 
       <!-- SHARE -->
       <div class="section" id="sec-share">
-        <div class="phead"><div><div class="ptitle">Share trip</div><div class="psub">Export or share your itinerary</div></div></div>
+        <div class="phead"><div><div class="ptitle">Share trip</div><div class="psub">Share a read-only link or download your itinerary</div></div></div>
         <div class="card">
-          <div class="card-hd"><div class="card-title">Export &amp; share</div></div>
+          <div class="card-hd"><div class="card-title">Share &amp; export</div></div>
           <div class="share-grid">
-            <div class="share-card primary" onclick="exportJSON()"><span class="share-icon">⬇</span>Download JSON</div>
-            <div class="share-card" onclick="copyLink()"><span class="share-icon">🔗</span>Copy link</div>
+            <div class="share-card primary" onclick="openShareModal()"><span class="share-icon">🔗</span>Share link</div>
             <div class="share-card" onclick="dlPDF()"><span class="share-icon">📄</span>Download PDF</div>
             <div class="share-card" onclick="emailIt()"><span class="share-icon">✉</span>Email itinerary</div>
           </div>
-          <p style="font-size:0.75rem;color:var(--text3)">PDF and share link require backend integration. JSON export works now.</p>
         </div>
         <div class="card">
           <div class="card-hd"><div class="card-title">Trip summary</div></div>
@@ -617,6 +615,47 @@
     <div style="display:flex;gap:0.75rem">
       <button class="btn" onclick="closeDeleteModal()" style="flex:1">Cancel</button>
       <button class="btn btn-danger" onclick="doDeleteAccount()" style="flex:1" id="deleteConfirmBtn">Delete account</button>
+    </div>
+  </div>
+</div>
+<!-- Share Link Modal -->
+<div id="shareModal" class="modal-overlay" style="display:none;">
+  <div class="modal share-modal" style="background:var(--navy);border:1px solid var(--border2);width:500px;max-width:95vw;max-height:85vh;overflow-y:auto;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;">
+      <h3 style="font-family:var(--font-head);font-size:1.2rem;font-weight:700;color:var(--text);margin:0;">Share your trip</h3>
+      <button onclick="closeShareModal()" style="background:none;border:none;color:var(--text3);cursor:pointer;font-size:1.1rem;padding:4px;">✕</button>
+    </div>
+
+    <!-- Active share links -->
+    <div id="shareLinksList"></div>
+
+    <!-- Divider shown only when there are existing links -->
+    <div id="shareCreateHeading" style="display:none;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.09em;color:var(--text3);margin-bottom:1rem;">Create new link</div>
+
+    <!-- Create form -->
+    <div id="shareCreateForm">
+      <label style="color:var(--text3);">Password protection</label>
+      <input type="password" id="sharePw" placeholder="Optional — leave blank for no password" style="background:var(--bg3);border-color:var(--border2);color:var(--text);">
+
+      <label style="color:var(--text3);">Link expires after</label>
+      <select id="shareExpiry" style="background:var(--bg3);border-color:var(--border2);color:var(--text);">
+        <option value="">Never</option>
+        <option value="7">7 days</option>
+        <option value="30">30 days</option>
+        <option value="1">24 hours</option>
+      </select>
+
+      <button class="btn btn-accent" id="shareGenerateBtn" onclick="generateShareLink()" style="margin-top:0.25rem;">Generate link</button>
+    </div>
+
+    <!-- Result -->
+    <div id="shareResult" style="display:none;margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid var(--border);">
+      <label style="color:var(--text3);">Your share link — copied to clipboard</label>
+      <div style="display:flex;gap:0.5rem;align-items:center;">
+        <input type="text" id="shareLinkOutput" readonly style="background:var(--bg3);border-color:var(--accentborder);color:var(--text);margin:0;font-size:0.78rem;">
+        <button class="btn btn-ghost" onclick="copyShareLink()" style="flex-shrink:0;padding:0.65rem 1rem;white-space:nowrap;">Copy</button>
+      </div>
+      <p style="font-size:0.75rem;color:var(--text3);margin-top:0.5rem;">Anyone with this link can view your trip in read-only mode.</p>
     </div>
   </div>
 </div>

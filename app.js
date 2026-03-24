@@ -838,10 +838,153 @@ function renderShare() {
   document.getElementById('shareSummary').innerHTML = `<p style="font-size:0.85rem;margin-bottom:0.75rem;color:var(--text2)"><strong style="color:var(--text)">Trip:</strong> ${S.tripStart ? fmtL(S.tripStart) + ' → ' + fmtL(S.tripEnd) : 'Not set'}</p><p style="font-size:0.85rem;color:var(--text2)"><strong style="color:var(--text)">${S.flights.length}</strong> flight(s) · <strong style="color:var(--text)">${S.parks.length}</strong> park day(s) · <strong style="color:var(--text)">${S.dining.length}</strong> dining · <strong style="color:var(--text)">${S.activities.length}</strong> activit${S.activities.length === 1 ? 'y' : 'ies'}</p>`;
 }
 
-function copyLink() { navigator.clipboard.writeText(location.href).then(() => toast('Link copied!')).catch(() => toast('Try JSON export instead')); }
-function exportJSON() { const b = new Blob([JSON.stringify(S, null, 2)], { type: 'application/json' }); const a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = 'orlando-magic-planner.json'; a.click(); toast('Trip exported!'); }
-function dlPDF() { toast('PDF export coming soon'); }
-function emailIt() { toast('Email sharing coming soon'); }
+// ── Share modal ───────────────────────────────────────────────────────────────
+async function sha256(text) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+async function openShareModal() {
+  document.getElementById('shareModal').style.display = 'flex';
+  document.getElementById('shareResult').style.display = 'none';
+  document.getElementById('sharePw').value = '';
+  document.getElementById('shareExpiry').value = '';
+  await loadShareLinks();
+}
+
+function closeShareModal() {
+  document.getElementById('shareModal').style.display = 'none';
+}
+
+async function loadShareLinks() {
+  const { data } = await sb.from('trip_shares')
+    .select('id, token, has_password, expires_at, created_at')
+    .eq('trip_id', S.tripId)
+    .order('created_at', { ascending: false });
+
+  const el = document.getElementById('shareLinksList');
+  const heading = document.getElementById('shareCreateHeading');
+
+  if (!data || !data.length) {
+    el.innerHTML = '';
+    heading.style.display = 'none';
+    return;
+  }
+
+  heading.style.display = 'block';
+  el.innerHTML = data.map(s => {
+    const url = `${location.origin}/share.html?t=${s.token}`;
+    const now = new Date();
+    const expired = s.expires_at && new Date(s.expires_at) < now;
+    const expiryLabel = expired ? '⚠ Expired' : s.expires_at ? `Expires ${fmtS(s.expires_at.split('T')[0])}` : 'Never expires';
+    const pwLabel = s.has_password ? '🔒 Password protected' : 'No password';
+    return `
+      <div style="display:flex;align-items:center;gap:10px;padding:0.75rem;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);margin-bottom:0.5rem;${expired ? 'opacity:0.5;' : ''}">
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:0.72rem;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${url}</div>
+          <div style="font-size:0.68rem;color:var(--text3);margin-top:2px;">${expiryLabel} · ${pwLabel}</div>
+        </div>
+        <button class="btn btn-ghost" onclick="copyLinkText('${url}')" style="padding:0.35rem 0.7rem;font-size:0.72rem;flex-shrink:0;">Copy</button>
+        <button class="del-btn" onclick="revokeShareLink('${s.id}')" title="Revoke link">✕</button>
+      </div>`;
+  }).join('');
+}
+
+const { data: { user } } = await sb.auth.getUser();
+console.log(user);
+
+async function generateShareLink() {
+  if (!S.tripId) { toast('No trip found — add some details first'); return; }
+  const pw = document.getElementById('sharePw').value;
+  const expiry = document.getElementById('shareExpiry').value;
+
+  const passwordHash = pw ? await sha256(pw) : null;
+  const expiresAt = expiry ? new Date(Date.now() + parseInt(expiry) * 86400000).toISOString() : null;
+
+  const btn = document.getElementById('shareGenerateBtn');
+  btn.textContent = 'Generating…'; btn.disabled = true;
+
+  const { data, error } = await sb.from('trip_shares').insert({
+    trip_id: S.tripId,
+    password_hash: passwordHash,
+    has_password: !!pw,
+    expires_at: expiresAt
+  }).select('token').single();
+
+  btn.textContent = 'Generate link'; btn.disabled = false;
+
+  if (error) { toast('Could not create link: ' + error.message); return; }
+
+  let token = data.token;
+
+// Make Base64 URL-safe
+token = token
+  .replace(/\+/g, '-')
+  .replace(/\//g, '_')
+  .replace(/=+$/, '');
+
+const url = `${location.origin}/share.html?t=${token}`;
+  document.getElementById('shareLinkOutput').value = url;
+  document.getElementById('shareResult').style.display = 'block';
+  navigator.clipboard.writeText(url).catch(() => {});
+  toast('Share link created and copied ✦');
+
+  await loadShareLinks();
+}
+
+async function revokeShareLink(id) {
+  await sb.from('trip_shares').delete().eq('id', id);
+  toast('Link revoked — it will no longer work');
+  await loadShareLinks();
+}
+
+function copyShareLink() {
+  const val = document.getElementById('shareLinkOutput').value;
+  navigator.clipboard.writeText(val).then(() => toast('Copied ✦'));
+}
+
+function copyLinkText(url) {
+  navigator.clipboard.writeText(url).then(() => toast('Copied ✦'));
+}
+
+// ── PDF download — prints the timeline view ───────────────────────────────────
+function dlPDF() {
+  nav('timeline');
+  setTimeout(() => window.print(), 350);
+}
+
+// ── Email itinerary ──────────────────────────────────────────────────────────
+function emailIt() {
+  const lines = ['Here\'s my Orlando trip plan!\n'];
+  if (S.tripStart) lines.push(`Dates: ${fmtL(S.tripStart)} → ${fmtL(S.tripEnd)}\n`);
+  if (S.flights.length) {
+    lines.push('FLIGHTS');
+    S.flights.forEach(f => lines.push(`  ✈ ${f.dir === 'out' ? 'Outbound' : 'Return'}: ${f.from || '?'} → ${f.to || '?'}${f.dep ? ', ' + fmtDT(f.dep) : ''}${f.num ? ' (' + f.num + ')' : ''}`));
+    lines.push('');
+  }
+  if (S.hotel.length) {
+    lines.push('HOTELS');
+    S.hotel.forEach(h => lines.push(`  🏨 ${h.name}${h.checkin ? ' · Check-in ' + fmtL(h.checkin) : ''}`));
+    lines.push('');
+  }
+  if (S.parks.length) {
+    lines.push('PARK DAYS');
+    S.parks.forEach(p => lines.push(`  🎢 ${p.name} — ${fmtL(p.date)}`));
+    lines.push('');
+  }
+  if (S.dining.length) {
+    lines.push('DINING');
+    S.dining.forEach(d => lines.push(`  🍽 ${d.name} — ${fmtL(d.date)} at ${d.time}`));
+    lines.push('');
+  }
+  if (S.activities.length) {
+    lines.push('ACTIVITIES');
+    S.activities.forEach(a => lines.push(`  ${aIcons[a.type] || '📌'} ${a.name} — ${fmtL(a.date)}`));
+  }
+  const subject = encodeURIComponent('My Orlando trip plan 🎢');
+  const body = encodeURIComponent(lines.join('\n'));
+  window.location.href = `mailto:?subject=${subject}&body=${body}`;
+}
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 function t2m(t) { if (!t) return 0; const [h, m] = t.split(':').map(Number); return h * 60 + (m || 0); }
@@ -884,7 +1027,8 @@ Object.assign(window, {
   addActivity, delActivity,
   addHotel, delHotel,        // ← NEW
   addCarHire, delCarHire,    // ← NEW
-  copyLink, exportJSON, dlPDF, emailIt,
+  copyLink: openShareModal, dlPDF, emailIt,
+  openShareModal, closeShareModal, generateShareLink, revokeShareLink, copyShareLink, copyLinkText,
   onDirChange,
   confirmDeleteAccount, closeDeleteModal, doDeleteAccount,
   addChecklist,
