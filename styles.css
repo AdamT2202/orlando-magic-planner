@@ -1159,4 +1159,17 @@ input[list] { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www
   transform: scale(0.97);
 }
 
+.btn-google {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px; /* space between icon + text */
+  padding: 12px 16px;
+  margin-top: 1em;
+}
+.btn-google img {
+  width: 18px;
+  height: 18px;
+}
 
