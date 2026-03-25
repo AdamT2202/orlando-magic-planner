@@ -102,6 +102,20 @@ async function doSignup() {
   showApp();
 }
 
+// ── Google Login ─────────────────────────────────────────────────
+const googleBtn = document.getElementById("google-login");
+if (googleBtn) {
+  googleBtn.onclick = async () => {
+    const { error } = await sb.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: "https://adamt2202.github.io/orlando-magic-planner/app.html"
+      }
+    });
+    if (error) console.error(error);
+  };
+}
+
 // ── Sign out ─────────────────────────────────────────────────────────────────
 let loggingOut = false;
 async function logout() {
