@@ -109,7 +109,7 @@ if (googleBtn) {
     const { error } = await sb.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: "https://adamt2202.github.io/orlando-magic-planner/app.html"
+        redirectTo: "https://orlandomagicplanner.com/app.html"
       }
     });
     if (error) console.error(error);
