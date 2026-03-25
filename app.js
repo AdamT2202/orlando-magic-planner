@@ -116,6 +116,19 @@ if (googleBtn) {
   };
 }
 
+// Detect OAuth redirect
+sb.auth.onAuthStateChange((event, session) => {
+  if (event === "SIGNED_IN") {
+    console.log("Signed in via OAuth:", session.user);
+    showApp(session.user);
+
+    // Clean URL
+    window.history.replaceState({}, document.title, "/");
+  }
+});
+
+
+
 // ── Sign out ─────────────────────────────────────────────────────────────────
 let loggingOut = false;
 async function logout() {
