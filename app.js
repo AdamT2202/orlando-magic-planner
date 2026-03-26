@@ -59,14 +59,19 @@ async function doLogin() {
   const btn = document.querySelector('#loginForm .btn-accent');
   btn.textContent = 'Signing in…'; btn.disabled = true;
 
+  console.log('1: attempting sign in');
   const { data, error } = await sb.auth.signInWithPassword({ email, password });
+  console.log('2: sign in response received');
 
   btn.textContent = 'Sign in →'; btn.disabled = false;
 
   if (error) { toast(error.message); return; }
 
+  console.log('3: setting user');
   S.user = { name: data.user.user_metadata?.name || email.split('@')[0], email: data.user.email };
+  console.log('4: loading from DB');
   await loadFromDB();
+  console.log('5: showing app');
   showApp();
 }
 
@@ -117,12 +122,19 @@ if (googleBtn) {
 }
 
 // Detect OAuth redirect
-sb.auth.onAuthStateChange((event, session) => {
-  if (event === "SIGNED_IN") {
-    console.log("Signed in via OAuth:", session.user);
-    showApp(session.user);
 
-    // Clean URL
+// After (fixed)
+sb.auth.onAuthStateChange(async (event, session) => {
+  if (event === "SIGNED_IN" && session?.user) {
+    const provider = session.user.app_metadata?.provider;
+    if (provider !== 'google') return; // ← only handle OAuth, not email login
+
+    S.user = {
+      name: session.user.user_metadata?.name || session.user.email.split('@')[0],
+      email: session.user.email
+    };
+    await loadFromDB();
+    showApp();
     window.history.replaceState({}, document.title, "/");
   }
 });
@@ -644,6 +656,8 @@ async function dp(e, i) {
   await updateParkOrder(); // persist new order to Supabase
 }
 
+console.log('halfway');
+
 // ── Navigation ───────────────────────────────────────────────────────────────
 function nav(id) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
@@ -928,9 +942,6 @@ async function loadShareLinks() {
   }).join('');
 }
 
-const { data: { user } } = await sb.auth.getUser();
-console.log(user);
-
 async function generateShareLink() {
   if (!S.tripId) { toast('No trip found — add some details first'); return; }
   const pw = document.getElementById('sharePw').value;
@@ -954,6 +965,8 @@ async function generateShareLink() {
   if (error) { toast('Could not create link: ' + error.message); return; }
 
   let token = data.token;
+
+ console.log('980');
 
 // Make Base64 URL-safe
 token = token
@@ -990,7 +1003,6 @@ function dlPDF() {
   nav('timeline');
   setTimeout(() => window.print(), 350);
 }
-
 // ── Email itinerary ──────────────────────────────────────────────────────────
 function emailIt() {
   const lines = ['Here\'s my Orlando trip plan!\n'];
@@ -1196,6 +1208,7 @@ window.sendResetEmail = sendResetEmail;
 function initCountdownLink() {
   const cdTrip = document.getElementById("cdTrip");
   const cdInfo = document.getElementById("cdInfo");
+  if (!cdTrip || !cdInfo) return;
 
   const hasDates = Boolean(S.tripStart && S.tripEnd);
 
@@ -1210,6 +1223,8 @@ function initCountdownLink() {
   cdTrip.style.cursor = "pointer";
   cdTrip.onclick = () => nav("settings");
 }
+
+
 initCountdownLink();
 
 // Add Checklist
@@ -1269,4 +1284,12 @@ function renderChecklists() {
   });
 }
 
+window.doLogin = doLogin;
+window.doSignup = doSignup;
+window.logout = logout;
+window.switchTab = switchTab;
+window.confirmDeleteAccount = confirmDeleteAccount;
+window.closeDeleteModal = closeDeleteModal;
+window.doDeleteAccount = doDeleteAccount;
 
+console.log('app.js fully loaded');
