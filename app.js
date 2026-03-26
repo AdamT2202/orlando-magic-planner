@@ -282,6 +282,7 @@ async function saveSettings() {
 
 // ── Generic event save to Supabase ───────────────────────────────────────────
 async function saveEvent(type, metadata, date, time, sortOrder = 0) {
+    console.log('tripId is:', S.tripId);  // ← add this
   const { data, error } = await sb.from('events').insert({
     trip_id: S.tripId,
     type,
@@ -656,7 +657,7 @@ async function dp(e, i) {
   await updateParkOrder(); // persist new order to Supabase
 }
 
-console.log('halfway');
+
 
 // ── Navigation ───────────────────────────────────────────────────────────────
 function nav(id) {
