@@ -135,7 +135,7 @@ async function logout() {
   if (loggingOut) return;
   loggingOut = true;
   await sb.auth.signOut();
-  window.location.href = 'index.html';
+  window.location.href = '/';
 }
 
 function confirmDeleteAccount() {
