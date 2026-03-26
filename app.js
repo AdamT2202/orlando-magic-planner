@@ -114,7 +114,7 @@ if (googleBtn) {
     const { error } = await sb.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: "https://orlandomagicplanner.com/app.html"
+        redirectTo: "https://orlandomagicplanner.com/app/"
       }
     });
     if (error) console.error(error);
