@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-7RWNLJQ3DH"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-7RWNLJQ3DH');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Park Wait Times | Orlando Magic Planner</title>
+  <meta name="description" content="Real-time ride wait times for Disney World, Universal Orlando, SeaWorld, Busch Gardens, and LEGOLAND Florida. Updated every 5 minutes.">
+  <link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy:      #03295b;
+      --navy-dark: #021e45;
+      --bg:        #080f1c;
+      --bg2:       #0d1829;
+      --bg3:       #122035;
+      --bg4:       #172840;
+      --border:    rgba(255,255,255,0.07);
+      --border2:   rgba(255,255,255,0.13);
+      --text:      #EEF4FF;
+      --text2:     #7B9BC4;
+      --text3:     #3e5f88;
+      --accent:    #FF5C3A;
+      --accent2:   #ff7c5e;
+      --accentbg:  rgba(255,92,58,0.12);
+      --accentborder: rgba(255,92,58,0.30);
+      --blue:    #4F8EFF;
+      --green:   #34D399;
+      --amber:   #FBBF24;
+      --red:     #F87171;
+      --purple:  #A78BFA;
+      --radius:    12px;
+      --radius-sm: 8px;
+      --font-head: 'Clash Display', sans-serif;
+      --font-body: 'Inter', system-ui, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── TOP NAV ── */
+    .top-nav {
+      background: var(--navy);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      height: 56px;
+      display: flex;
+      align-items: center;
+      padding: 0 1.5rem;
+      gap: 1rem;
+      position: sticky;
+      top: 0;
+      z-index: 200;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      margin-right: auto;
+    }
+
+    .nav-brand img {
+      height: 34px;
+      width: 34px;
+      object-fit: contain;
+      filter: brightness(0) invert(1);
+      opacity: 0.9;
+    }
+
+    .nav-wordmark { line-height: 1.1; }
+    .nav-top {
+      font-size: 0.55rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(238,244,255,0.45);
+    }
+    .nav-name {
+      font-family: var(--font-head);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.2px;
+    }
+
+    .nav-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--accentbg);
+      border: 1px solid var(--accentborder);
+      color: var(--accent2);
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 5px 12px;
+      border-radius: 20px;
+    }
+
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.15s;
+    }
+    .nav-btn:hover { background: var(--accent2); }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--navy);
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 2rem 1.75rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -120px; right: -80px;
+      width: 400px; height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,92,58,0.12) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero h1 {
+      font-family: var(--font-head);
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      font-weight: 700;
+      letter-spacing: -0.8px;
+      margin-bottom: 0.4rem;
+    }
+
+    .hero h1 span { color: var(--accent2); }
+
+    .hero-sub {
+      font-size: 0.9rem;
+      color: var(--text2);
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-meta {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+    }
+
+    .meta-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.75rem;
+      color: var(--text2);
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border2);
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+
+    .meta-chip .dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .refresh-btn {
+      background: none;
+      border: 1px solid var(--border2);
+      color: var(--text2);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      font-family: var(--font-body);
+      transition: all 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .refresh-btn:hover { color: var(--text); border-color: rgba(255,255,255,0.25); }
+    .refresh-btn.spinning .refresh-icon { animation: spin 0.8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── PARK NAV ── */
+    .parks-nav-wrap {
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 56px;
+      z-index: 100;
+    }
+
+    .parks-nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .park-group-label {
+      font-size: 0.6rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text3);
+      padding: 0.85rem 0 0.3rem;
+    }
+
+    .park-tabs {
+      display: flex;
+      gap: 4px;
+      overflow-x: auto;
+      padding-bottom: 0.6rem;
+      scrollbar-width: none;
+    }
+    .park-tabs::-webkit-scrollbar { display: none; }
+
+    .park-groups {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .park-group-row {
+      display: flex;
+      align-items: center;
+      padding: 0.5rem 0;
+      gap: 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .park-group-row:last-child { border-bottom: none; }
+
+    .group-name {
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text3);
+      width: 110px;
+      flex-shrink: 0;
+      padding-right: 0.75rem;
+    }
+
+    .park-tabs-row {
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+
+    .park-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 13px;
+      border-radius: 20px;
+      border: 1px solid transparent;
+      background: none;
+      cursor: pointer;
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text2);
+      white-space: nowrap;
+      transition: all 0.15s;
+      text-align: left;
+    }
+    .park-tab:hover {
+      background: rgba(255,255,255,0.06);
+      color: var(--text);
+    }
+    .park-tab.active {
+      background: var(--accentbg);
+      border-color: var(--accentborder);
+      color: var(--accent2);
+    }
+    .park-tab .tab-icon { font-size: 14px; }
+
+    /* ── MAIN CONTENT ── */
+    .content-wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1.5rem 2rem 4rem;
+    }
+
+    /* ── PARK HEADER ── */
+    .park-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .park-title {
+      font-family: var(--font-head);
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .park-icon-badge {
+      font-size: 1.6rem;
+    }
+
+    .park-status-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 0.4rem;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.73rem;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 20px;
+    }
+    .status-badge.open {
+      background: rgba(52,211,153,0.12);
+      color: var(--green);
+      border: 1px solid rgba(52,211,153,0.25);
+    }
+    .status-badge.closed {
+      background: rgba(248,113,113,0.1);
+      color: var(--red);
+      border: 1px solid rgba(248,113,113,0.2);
+    }
+    .status-badge.info {
+      background: rgba(79,142,255,0.1);
+      color: var(--blue);
+      border: 1px solid rgba(79,142,255,0.2);
+    }
+
+    /* ── STATS ROW ── */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 10px;
+      margin-bottom: 1.5rem;
+    }
+
+    .stat-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem 1.25rem;
+    }
+
+    .stat-label {
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text3);
+      margin-bottom: 0.35rem;
+    }
+
+    .stat-value {
+      font-family: var(--font-head);
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    .stat-sub {
+      font-size: 0.72rem;
+      color: var(--text2);
+      margin-top: 0.15rem;
+    }
+
+    /* ── FILTER ROW ── */
+    .filter-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 1.25rem;
+      flex-wrap: wrap;
+    }
+
+    .filter-label {
+      font-size: 0.72rem;
+      color: var(--text3);
+      font-weight: 600;
+    }
+
+    .filter-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      border: 1px solid var(--border2);
+      background: none;
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--text2);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .filter-chip:hover { color: var(--text); border-color: rgba(255,255,255,0.25); }
+    .filter-chip.active {
+      background: var(--bg3);
+      border-color: var(--border2);
+      color: var(--text);
+    }
+
+    .search-box {
+      margin-left: auto;
+      position: relative;
+    }
+    .search-box input {
+      background: var(--bg3);
+      border: 1px solid var(--border2);
+      border-radius: 20px;
+      padding: 5px 14px 5px 30px;
+      font-size: 0.78rem;
+      color: var(--text);
+      font-family: var(--font-body);
+      outline: none;
+      width: 180px;
+      transition: border-color 0.15s, width 0.2s;
+    }
+    .search-box input:focus { border-color: var(--accent); width: 220px; }
+    .search-box input::placeholder { color: var(--text3); }
+    .search-icon {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text3);
+      font-size: 12px;
+      pointer-events: none;
+    }
+
+    /* ── RIDES GRID ── */
+    .rides-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 10px;
+    }
+
+    .ride-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 0.9rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      transition: border-color 0.15s, background 0.15s;
+      cursor: default;
+    }
+    .ride-card:hover {
+      border-color: var(--border2);
+      background: var(--bg3);
+    }
+
+    .wait-bubble {
+      flex-shrink: 0;
+      width: 58px;
+      height: 58px;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-head);
+      position: relative;
+    }
+
+    .wait-bubble.green  { background: rgba(52,211,153,0.12); border: 1.5px solid rgba(52,211,153,0.25); }
+    .wait-bubble.amber  { background: rgba(251,191,36,0.12);  border: 1.5px solid rgba(251,191,36,0.25); }
+    .wait-bubble.red    { background: rgba(248,113,113,0.12); border: 1.5px solid rgba(248,113,113,0.25); }
+    .wait-bubble.grey   { background: rgba(255,255,255,0.04); border: 1.5px solid var(--border); }
+    .wait-bubble.down   { background: rgba(248,113,113,0.08); border: 1.5px solid rgba(248,113,113,0.15); }
+
+    .wait-mins {
+      font-size: 1.35rem;
+      font-weight: 700;
+      line-height: 1;
+    }
+    .wait-bubble.green  .wait-mins { color: var(--green); }
+    .wait-bubble.amber  .wait-mins { color: var(--amber); }
+    .wait-bubble.red    .wait-mins { color: var(--red); }
+    .wait-bubble.grey   .wait-mins { color: var(--text3); font-size: 1rem; }
+    .wait-bubble.down   .wait-mins { color: var(--red); font-size: 0.8rem; }
+
+    .wait-unit {
+      font-size: 0.6rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      opacity: 0.7;
+      margin-top: 1px;
+    }
+
+    .ride-info { flex: 1; min-width: 0; }
+
+    .ride-name {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.25rem;
+      line-height: 1.3;
+    }
+
+    .ride-badges {
+      display: flex;
+      gap: 5px;
+      flex-wrap: wrap;
+    }
+
+    .ride-badge {
+      font-size: 0.62rem;
+      font-weight: 600;
+      padding: 2px 7px;
+      border-radius: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .ride-badge.operating { background: rgba(52,211,153,0.1); color: var(--green); }
+    .ride-badge.closed    { background: rgba(255,255,255,0.05); color: var(--text3); }
+    .ride-badge.down      { background: rgba(248,113,113,0.1); color: var(--red); }
+    .ride-badge.refurb    { background: rgba(251,191,36,0.1); color: var(--amber); }
+    .ride-badge.single    { background: rgba(79,142,255,0.1); color: var(--blue); }
+
+    /* ── LOADING / ERROR ── */
+    .loading-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      padding: 5rem 2rem;
+      color: var(--text2);
+    }
+
+    .spinner {
+      width: 40px; height: 40px;
+      border: 3px solid var(--border2);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+
+    .loading-text { font-size: 0.875rem; }
+
+    .error-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      padding: 4rem 2rem;
+      text-align: center;
+    }
+
+    .error-icon { font-size: 2.5rem; }
+    .error-title { font-family: var(--font-head); font-size: 1.2rem; font-weight: 700; }
+    .error-sub { font-size: 0.85rem; color: var(--text2); max-width: 380px; line-height: 1.6; }
+
+    .retry-btn {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 8px 20px;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      transition: background 0.15s;
+    }
+    .retry-btn:hover { background: var(--accent2); }
+
+    /* ── FOOTER ── */
+    .parks-footer {
+      border-top: 1px solid var(--border);
+      padding: 1.5rem 2rem;
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--text3);
+    }
+
+    .parks-footer a { color: var(--text2); text-decoration: none; }
+    .parks-footer a:hover { color: var(--text); }
+
+    /* ── EMPTY STATE ── */
+    .empty-state {
+      grid-column: 1 / -1;
+      padding: 3rem;
+      text-align: center;
+      color: var(--text2);
+      font-size: 0.875rem;
+    }
+
+    /* ── LEGEND ── */
+    .legend {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+      align-items: center;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.72rem;
+      color: var(--text2);
+    }
+
+    .legend-dot {
+      width: 8px; height: 8px;
+      border-radius: 2px;
+    }
+
+    /* ── SCHEDULE BANNER ── */
+    .schedule-banner {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 0.9rem 1.25rem;
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+      margin-bottom: 1.25rem;
+      flex-wrap: wrap;
+    }
+
+    .schedule-item {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .schedule-label {
+      font-size: 0.62rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text3);
+    }
+
+    .schedule-value {
+      font-family: var(--font-head);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .hero { padding: 1.5rem; }
+      .content-wrap { padding: 1.25rem 1rem 3rem; }
+      .parks-nav-inner { padding: 0 1rem; }
+      .group-name { display: none; }
+      .park-group-row { flex-wrap: wrap; }
+      .stats-row { grid-template-columns: repeat(2, 1fr); }
+      .rides-grid { grid-template-columns: 1fr; }
+      .search-box { display: none; }
+      .top-nav { padding: 0 1rem; }
+      .nav-pill { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP NAV -->
+  <nav class="top-nav">
+    <a href="/" class="nav-brand">
+      <img src="/img/Orlando Magic Planner.png" alt="Orlando Magic Planner">
+      <div class="nav-wordmark">
+        <div class="nav-top">Orlando</div>
+        <div class="nav-name">Magic Planner</div>
+      </div>
+    </a>
+    <div class="nav-pill">🎢 Live Wait Times</div>
+    <a href="/" class="nav-btn">Plan your trip →</a>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-inner">
+      <h1>Live Orlando <span>Wait Times</span></h1>
+      <p class="hero-sub">Real-time queue data across 10 Orlando-area theme parks · No login needed</p>
+      <div class="hero-meta">
+        <div class="meta-chip">
+          <div class="dot"></div>
+          <span>Live data</span>
+        </div>
+        <div class="meta-chip" id="lastUpdatedChip">Updated —</div>
+        <div class="meta-chip" id="countdownChip">Next refresh in 5:00</div>
+        <button class="refresh-btn" id="refreshBtn" onclick="manualRefresh()">
+          <span class="refresh-icon">↻</span> Refresh now
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PARK NAVIGATION -->
+  <div class="parks-nav-wrap">
+    <div class="parks-nav-inner" id="parksNavInner">
+      <div class="loading-wrap" style="padding:1rem;flex-direction:row;gap:0.75rem;">
+        <div class="spinner" style="width:18px;height:18px;border-width:2px;"></div>
+        <span style="font-size:0.8rem;color:var(--text2);">Discovering parks…</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="content-wrap">
+    <div id="contentArea">
+      <!-- Populated by JS -->
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="parks-footer">
+    <p>Wait time data powered by <a href="https://themeparks.wiki" target="_blank" rel="noopener">ThemeParks.wiki</a> · Data is approximate and updated every 5 minutes</p>
+    <p style="margin-top:0.4rem;">Part of <a href="/">Orlando Magic Planner</a> — your complete trip planning toolkit</p>
+  </footer>
+
+  <script>
+    const API_BASE = 'https://api.themeparks.wiki/v1';
+
+    // Park definitions — match names from the API
+    const PARK_CONFIGS = [
+      { key: 'magic-kingdom',        name: 'Magic Kingdom',           icon: '🏰', group: 'Walt Disney World',       matchNames: ['Magic Kingdom'] },
+      { key: 'epcot',                name: 'EPCOT',                   icon: '🌍', group: 'Walt Disney World',       matchNames: ['Epcot', 'EPCOT'] },
+      { key: 'hollywood-studios',    name: 'Hollywood Studios',       icon: '🎬', group: 'Walt Disney World',       matchNames: ['Hollywood Studios'] },
+      { key: 'animal-kingdom',       name: 'Animal Kingdom',          icon: '🦁', group: 'Walt Disney World',       matchNames: ['Animal Kingdom'] },
+      { key: 'universal-studios',    name: 'Universal Studios Florida',icon: '🎭', group: 'Universal Orlando',       matchNames: ['Universal Studios Florida'] },
+      { key: 'islands-of-adventure', name: 'Islands of Adventure',    icon: '🗺️', group: 'Universal Orlando',       matchNames: ["Islands of Adventure"] },
+      { key: 'epic-universe',        name: 'Epic Universe',           icon: '⚡', group: 'Universal Orlando',       matchNames: ['Epic Universe'] },
+      { key: 'seaworld-orlando',     name: 'SeaWorld Orlando',        icon: '🐬', group: 'SeaWorld & Busch Gardens', matchNames: ['SeaWorld Orlando', 'Seaworld Orlando'] },
+      { key: 'busch-gardens-tampa',  name: 'Busch Gardens Tampa',     icon: '🌿', group: 'SeaWorld & Busch Gardens', matchNames: ['Busch Gardens Tampa'] },
+      { key: 'legoland-florida',     name: 'LEGOLAND Florida',        icon: '🧱', group: 'LEGOLAND',                matchNames: ['LEGOLAND Florida', 'Legoland Florida', 'Legoland® Florida'] },
+    ];
+
+    const GROUP_ORDER = ['Walt Disney World', 'Universal Orlando', 'SeaWorld & Busch Gardens', 'LEGOLAND'];
+
+    // State
+    let parkEntityIds = {};       // key → entityId
+    let selectedParkKey = 'magic-kingdom';
+    let liveCache = {};           // key → { data, fetchedAt }
+    let countdownInterval = null;
+    let refreshInterval = null;
+    let nextRefreshAt = null;
+    let isLoading = false;
+
+    // ── INIT ──────────────────────────────────────────────────────────────
+    async function init() {
+      try {
+        await discoverParks();
+        renderNavigation();
+        await loadPark(selectedParkKey);
+        startAutoRefresh();
+      } catch (err) {
+        showError('Could not connect to the ThemeParks.wiki API', 'This may be a temporary issue. Please try refreshing the page.');
+        console.error('Init error:', err);
+      }
+    }
+
+    // ── DISCOVER PARK IDs ─────────────────────────────────────────────────
+    async function discoverParks() {
+      const res = await fetch(`${API_BASE}/destinations`);
+      if (!res.ok) throw new Error(`API returned ${res.status}`);
+      const data = await res.json();
+
+      for (const destination of (data.destinations || [])) {
+        for (const park of (destination.parks || [])) {
+          const parkName = park.name || '';
+          for (const config of PARK_CONFIGS) {
+            if (config.matchNames.some(m => parkName.toLowerCase().includes(m.toLowerCase()) || m.toLowerCase().includes(parkName.toLowerCase()))) {
+              if (!parkEntityIds[config.key]) {
+                parkEntityIds[config.key] = park.id;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    // ── RENDER NAVIGATION ─────────────────────────────────────────────────
+    function renderNavigation() {
+      const container = document.getElementById('parksNavInner');
+
+      const groups = {};
+      for (const config of PARK_CONFIGS) {
+        if (!groups[config.group]) groups[config.group] = [];
+        groups[config.group].push(config);
+      }
+
+      let html = '<div class="park-groups">';
+      for (const groupName of GROUP_ORDER) {
+        const parks = groups[groupName] || [];
+        html += `<div class="park-group-row">`;
+        html += `<div class="group-name">${groupName}</div>`;
+        html += `<div class="park-tabs-row">`;
+        for (const park of parks) {
+          const hasId = !!parkEntityIds[park.key];
+          const activeClass = park.key === selectedParkKey ? 'active' : '';
+          const disabledStyle = hasId ? '' : 'opacity:0.4;pointer-events:none;';
+          html += `
+            <button class="park-tab ${activeClass}" 
+                    onclick="selectPark('${park.key}')"
+                    style="${disabledStyle}"
+                    title="${hasId ? park.name : park.name + ' — not yet available in API'}">
+              <span class="tab-icon">${park.icon}</span>
+              ${park.name}
+            </button>`;
+        }
+        html += `</div></div>`;
+      }
+      html += '</div>';
+
+      container.innerHTML = html;
+    }
+
+    // ── SELECT PARK ───────────────────────────────────────────────────────
+    async function selectPark(key) {
+      if (key === selectedParkKey && !isLoading) return;
+      selectedParkKey = key;
+
+      // Update active tab
+      document.querySelectorAll('.park-tab').forEach(btn => {
+        btn.classList.toggle('active', btn.textContent.trim().includes(getParkConfig(key).name));
+      });
+
+      await loadPark(key);
+    }
+
+    // ── LOAD PARK DATA ────────────────────────────────────────────────────
+    async function loadPark(key) {
+      const entityId = parkEntityIds[key];
+      if (!entityId) {
+        showError('Park data not available', "This park's data isn't currently available in the ThemeParks.wiki API. Try another park or check back later.");
+        return;
+      }
+
+      // Use cache if fresh (< 60 seconds)
+      const cached = liveCache[key];
+      if (cached && Date.now() - cached.fetchedAt < 60000) {
+        renderPark(key, cached.data);
+        return;
+      }
+
+      showLoading();
+      isLoading = true;
+
+      try {
+        const [liveRes, scheduleRes] = await Promise.allSettled([
+          fetch(`${API_BASE}/entity/${entityId}/live`),
+          fetch(`${API_BASE}/entity/${entityId}/schedule`)
+        ]);
+
+        let liveData = [];
+        if (liveRes.status === 'fulfilled' && liveRes.value.ok) {
+          const json = await liveRes.value.json();
+          liveData = json.liveData || [];
+        }
+
+        let scheduleData = null;
+        if (scheduleRes.status === 'fulfilled' && scheduleRes.value.ok) {
+          scheduleData = await scheduleRes.value.json();
+        }
+
+        const combined = { liveData, scheduleData, fetchedAt: Date.now() };
+        liveCache[key] = { data: combined, fetchedAt: Date.now() };
+        updateLastUpdated();
+        renderPark(key, combined);
+
+      } catch (err) {
+        showError('Failed to load wait times', 'There was a problem fetching live data. Please try again in a moment.');
+        console.error('loadPark error:', err);
+      } finally {
+        isLoading = false;
+      }
+    }
+
+    // ── RENDER PARK ───────────────────────────────────────────────────────
+    function renderPark(key, data) {
+      const config = getParkConfig(key);
+      const rides = (data.liveData || []).filter(e => e.entityType === 'ATTRACTION');
+
+      // Sort: open rides first, then by wait time desc
+      rides.sort((a, b) => {
+        const aWait = getWaitTime(a);
+        const bWait = getWaitTime(b);
+        const aOpen = a.status === 'OPERATING';
+        const bOpen = b.status === 'OPERATING';
+        if (aOpen !== bOpen) return bOpen - aOpen;
+        return (bWait || 0) - (aWait || 0);
+      });
+
+      const operating = rides.filter(r => r.status === 'OPERATING');
+      const closed    = rides.filter(r => r.status === 'CLOSED');
+      const down      = rides.filter(r => r.status === 'DOWN');
+      const refurb    = rides.filter(r => r.status === 'REFURBISHMENT');
+
+      const avgWait = operating.length
+        ? Math.round(operating.reduce((s, r) => s + (getWaitTime(r) || 0), 0) / operating.length)
+        : 0;
+
+      const maxWait = operating.length
+        ? Math.max(...operating.map(r => getWaitTime(r) || 0))
+        : 0;
+
+      // Today's schedule
+      let openTime = '—', closeTime = '—';
+      if (data.scheduleData) {
+        const today = new Date().toISOString().split('T')[0];
+        const schedules = data.scheduleData.schedule || [];
+        const todayEntry = schedules.find(s => s.date === today && s.type === 'OPERATING');
+        if (todayEntry) {
+          openTime  = formatTime(todayEntry.openingTime);
+          closeTime = formatTime(todayEntry.closingTime);
+        }
+      }
+
+      let html = `
+        <div class="park-header">
+          <div>
+            <div class="park-title">
+              <span class="park-icon-badge">${config.icon}</span>
+              ${config.name}
+            </div>
+            <div class="park-status-row">
+              <span class="status-badge ${operating.length > 0 ? 'open' : 'closed'}">
+                ${operating.length > 0 ? '● Open' : '● Closed'}
+              </span>
+              ${openTime !== '—' ? `<span class="status-badge info">🕐 ${openTime} – ${closeTime}</span>` : ''}
+              <span class="status-badge info">${rides.length} attractions</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="stats-row">
+          <div class="stat-card">
+            <div class="stat-label">Rides Operating</div>
+            <div class="stat-value" style="color:var(--green)">${operating.length}</div>
+            <div class="stat-sub">of ${rides.length} total</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Avg Wait Time</div>
+            <div class="stat-value" style="color:${waitColor(avgWait)}">${avgWait > 0 ? avgWait + ' min' : '—'}</div>
+            <div class="stat-sub">open rides only</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Longest Wait</div>
+            <div class="stat-value" style="color:${waitColor(maxWait)}">${maxWait > 0 ? maxWait + ' min' : '—'}</div>
+            <div class="stat-sub">highest current queue</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Temporarily Down</div>
+            <div class="stat-value" style="color:var(--red)">${down.length}</div>
+            <div class="stat-sub">${refurb.length} in refurbishment</div>
+          </div>
+        </div>
+
+        <div class="filter-row">
+          <span class="filter-label">Filter:</span>
+          <button class="filter-chip active" onclick="setFilter('all', this)">All (${rides.length})</button>
+          <button class="filter-chip" onclick="setFilter('operating', this)">Open (${operating.length})</button>
+          <button class="filter-chip" onclick="setFilter('short', this)">Short wait ≤20 min</button>
+          <button class="filter-chip" onclick="setFilter('closed', this)">Closed (${closed.length + down.length})</button>
+          <div class="search-box">
+            <span class="search-icon">🔍</span>
+            <input type="text" placeholder="Search rides…" oninput="searchRides(this.value)" id="rideSearch">
+          </div>
+        </div>
+
+        <div class="legend">
+          <span class="legend-item"><span class="legend-dot" style="background:var(--green)"></span> ≤ 20 min</span>
+          <span class="legend-item"><span class="legend-dot" style="background:var(--amber)"></span> 21–60 min</span>
+          <span class="legend-item"><span class="legend-dot" style="background:var(--red)"></span> 60+ min</span>
+          <span class="legend-item"><span class="legend-dot" style="background:var(--text3)"></span> Closed / Down</span>
+        </div>
+
+        <div class="rides-grid" id="ridesGrid">
+          ${renderRideCards(rides)}
+        </div>
+      `;
+
+      document.getElementById('contentArea').innerHTML = html;
+      currentRides = rides;
+      currentFilter = 'all';
+    }
+
+    let currentRides = [];
+    let currentFilter = 'all';
+    let currentSearch = '';
+
+    function setFilter(filter, btn) {
+      currentFilter = filter;
+      document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+      btn.classList.add('active');
+      applyFilters();
+    }
+
+    function searchRides(val) {
+      currentSearch = val.toLowerCase();
+      applyFilters();
+    }
+
+    function applyFilters() {
+      let rides = [...currentRides];
+
+      if (currentFilter === 'operating') {
+        rides = rides.filter(r => r.status === 'OPERATING');
+      } else if (currentFilter === 'short') {
+        rides = rides.filter(r => r.status === 'OPERATING' && (getWaitTime(r) || 999) <= 20);
+      } else if (currentFilter === 'closed') {
+        rides = rides.filter(r => r.status === 'CLOSED' || r.status === 'DOWN');
+      }
+
+      if (currentSearch) {
+        rides = rides.filter(r => r.name.toLowerCase().includes(currentSearch));
+      }
+
+      const grid = document.getElementById('ridesGrid');
+      if (grid) {
+        grid.innerHTML = rides.length
+          ? renderRideCards(rides)
+          : `<div class="empty-state">No rides match your filter.</div>`;
+      }
+    }
+
+    function renderRideCards(rides) {
+      if (!rides.length) return '<div class="empty-state">No ride data available.</div>';
+
+      return rides.map(ride => {
+        const wait = getWaitTime(ride);
+        const singleWait = getSingleRiderWait(ride);
+        const status = (ride.status || '').toUpperCase();
+
+        let bubbleClass = 'grey';
+        let waitDisplay = '—';
+        let waitUnit = '';
+
+        if (status === 'OPERATING' && wait !== null) {
+          waitDisplay = wait;
+          waitUnit = 'min';
+          bubbleClass = wait <= 20 ? 'green' : wait <= 60 ? 'amber' : 'red';
+        } else if (status === 'DOWN') {
+          bubbleClass = 'down';
+          waitDisplay = 'Down';
+        } else if (status === 'REFURBISHMENT') {
+          bubbleClass = 'grey';
+          waitDisplay = 'Refurb';
+        } else if (status === 'CLOSED') {
+          bubbleClass = 'grey';
+          waitDisplay = 'Closed';
+        }
+
+        const statusBadge = status === 'OPERATING' ? 'operating' :
+                            status === 'DOWN'       ? 'down' :
+                            status === 'REFURBISHMENT' ? 'refurb' : 'closed';
+
+        const statusLabel = status === 'OPERATING' ? 'Operating' :
+                            status === 'DOWN'       ? 'Temporarily Down' :
+                            status === 'REFURBISHMENT' ? 'Refurbishment' : 'Closed';
+
+        return `
+          <div class="ride-card">
+            <div class="wait-bubble ${bubbleClass}">
+              <span class="wait-mins">${waitDisplay}</span>
+              ${waitUnit ? `<span class="wait-unit">${waitUnit}</span>` : ''}
+            </div>
+            <div class="ride-info">
+              <div class="ride-name">${escapeHtml(ride.name)}</div>
+              <div class="ride-badges">
+                <span class="ride-badge ${statusBadge}">${statusLabel}</span>
+                ${singleWait !== null ? `<span class="ride-badge single">Single rider: ${singleWait}m</span>` : ''}
+              </div>
+            </div>
+          </div>`;
+      }).join('');
+    }
+
+    // ── HELPERS ───────────────────────────────────────────────────────────
+    function getWaitTime(ride) {
+      try {
+        if (ride.queue?.STANDBY?.waitTime !== undefined) return ride.queue.STANDBY.waitTime;
+        if (ride.queue?.RETURN_TIME?.waitTime !== undefined) return ride.queue.RETURN_TIME.waitTime;
+        if (ride.waitTime !== undefined) return ride.waitTime;
+      } catch (e) {}
+      return null;
+    }
+
+    function getSingleRiderWait(ride) {
+      try {
+        if (ride.queue?.SINGLE_RIDER?.waitTime !== undefined) return ride.queue.SINGLE_RIDER.waitTime;
+      } catch (e) {}
+      return null;
+    }
+
+    function waitColor(mins) {
+      if (!mins) return 'var(--text2)';
+      if (mins <= 20) return 'var(--green)';
+      if (mins <= 60) return 'var(--amber)';
+      return 'var(--red)';
+    }
+
+    function getParkConfig(key) {
+      return PARK_CONFIGS.find(p => p.key === key) || PARK_CONFIGS[0];
+    }
+
+    function formatTime(isoTime) {
+      if (!isoTime) return '—';
+      try {
+        const d = new Date(isoTime);
+        return d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true, timeZone: 'America/New_York' });
+      } catch (e) { return '—'; }
+    }
+
+    function escapeHtml(str) {
+      const div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    function updateLastUpdated() {
+      const now = new Date();
+      const timeStr = now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+      document.getElementById('lastUpdatedChip').textContent = `Updated ${timeStr}`;
+    }
+
+    // ── LOADING / ERROR STATES ────────────────────────────────────────────
+    function showLoading() {
+      document.getElementById('contentArea').innerHTML = `
+        <div class="loading-wrap">
+          <div class="spinner"></div>
+          <p class="loading-text">Fetching live wait times…</p>
+        </div>`;
+    }
+
+    function showError(title, sub) {
+      document.getElementById('contentArea').innerHTML = `
+        <div class="error-wrap">
+          <div class="error-icon">⚠️</div>
+          <div class="error-title">${title}</div>
+          <p class="error-sub">${sub}</p>
+          <button class="retry-btn" onclick="loadPark('${selectedParkKey}')">Try again</button>
+        </div>`;
+    }
+
+    // ── AUTO REFRESH ──────────────────────────────────────────────────────
+    const REFRESH_INTERVAL_MS = 5 * 60 * 1000; // 5 minutes
+
+    function startAutoRefresh() {
+      nextRefreshAt = Date.now() + REFRESH_INTERVAL_MS;
+
+      if (countdownInterval) clearInterval(countdownInterval);
+      countdownInterval = setInterval(updateCountdown, 1000);
+
+      if (refreshInterval) clearInterval(refreshInterval);
+      refreshInterval = setInterval(async () => {
+        // Bust cache for current park and reload
+        delete liveCache[selectedParkKey];
+        nextRefreshAt = Date.now() + REFRESH_INTERVAL_MS;
+        await loadPark(selectedParkKey);
+      }, REFRESH_INTERVAL_MS);
+    }
+
+    function updateCountdown() {
+      const remaining = Math.max(0, nextRefreshAt - Date.now());
+      const mins = Math.floor(remaining / 60000);
+      const secs = Math.floor((remaining % 60000) / 1000);
+      document.getElementById('countdownChip').textContent =
+        `Next refresh in ${mins}:${String(secs).padStart(2, '0')}`;
+    }
+
+    async function manualRefresh() {
+      const btn = document.getElementById('refreshBtn');
+      btn.classList.add('spinning');
+      btn.disabled = true;
+      delete liveCache[selectedParkKey];
+      await loadPark(selectedParkKey);
+      btn.classList.remove('spinning');
+      btn.disabled = false;
+      // Reset countdown
+      nextRefreshAt = Date.now() + REFRESH_INTERVAL_MS;
+    }
+
+    // ── START ─────────────────────────────────────────────────────────────
+    init();
+  </script>
+
+</body>
+</html>
