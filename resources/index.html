@@ -1,16 +1,261 @@
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-7RWNLJQ3DH"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-7RWNLJQ3DH');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!--EDIT THIS SECTION--><title>Your Complete Guide to Visiting Walt Disney World in 2026 | Orlando Magic Planner</title>
+  <!--EDIT THIS SECTION--><meta name="description" content="From sweeping ride refurbishments and brand-new experiences to a packed calendar of festivals and special events, there has never been a better excuse to start planning your Orlando adventure.">
+  <link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<!--EDIT THIS SECTION START-->
+  
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Your Complete Guide to Visiting Walt Disney World in 2026",
+  "url": "https://orlandomagicplanner.com/resources/your-complete-guide-to-visiting-walt-disney-world-in-2026.html"
+}
+</script>
+
+<!--EDIT THIS SECTION END-->
+
+<link rel="stylesheet" href="/styles.css">
+<link rel="icon" type="image/png" href="/img/Orlando Magic Planner.png">
+</head>
+<!-- NAV -->
+<nav>
+  <a class="nav-brand" href="/">
+    <img class="nav-logo" src="/img/Orlando Magic Planner.png" alt="Orlando Magic Planner">
+    <div class="nav-wordmark">
+      <div class="nav-top">Orlando</div>
+      <div class="nav-name">Magic Planner</div>
+    </div>
+  </a>
+
+  <!-- Right: auth buttons + burger -->
+  <div class="nav-links">
+    <a class="btn-nav-ghost" href="/app">Sign in</a>
+    <a class="btn-nav-accent" href="/app#signup">Start planning →</a>
+    <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Slide Out Menu Start -->
+<div id="nav-placeholder"></div>
+<script>
+  fetch('/nav.html')
+    .then(r => r.text())
+    .then(html => {
+      document.getElementById('nav-placeholder').innerHTML = html;
+
+      // Runs after nav is injected into the page
+      const burger  = document.getElementById('navBurger');
+      const drawer  = document.getElementById('navDrawer');
+      const overlay = document.getElementById('navOverlay');
+
+      function openDrawer() {
+        overlay.style.display = 'block';
+        overlay.offsetHeight; // force reflow so transition fires
+        drawer.classList.add('open');
+        overlay.classList.add('open');
+        burger.classList.add('open');
+        burger.setAttribute('aria-expanded', 'true');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeDrawer() {
+        drawer.classList.remove('open');
+        overlay.classList.remove('open');
+        burger.classList.remove('open');
+        burger.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+        setTimeout(() => { overlay.style.display = 'none'; }, 300);
+      }
+
+      burger.addEventListener('click', () => {
+        drawer.classList.contains('open') ? closeDrawer() : openDrawer();
+      });
+
+      overlay.addEventListener('click', closeDrawer);
+
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') closeDrawer();
+      });
+    });
+</script>
+<!-- Slide Out Menu End-->
 <style>
-  .resource-card {
+  .resources-container {
+    max-width: 900px;
+    margin: 4rem auto;
+    padding: 0 1rem;
+  }
+
+  .resources-title {
+    font-size: 2.4rem;
+    margin-bottom: 2rem;
+    font-weight: 700;
+  }
+
+  .posts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 2rem;
+  }
+
+  .post-card {
+    display: block;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .post-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+  }
+
+  .post-thumb {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+  }
+
+  .post-card-content {
     padding: 1rem;
-    border-bottom: 1px solid #ddd;
+    color: #000;
   }
-  .resource-card h2 {
+
+  .post-card-cats {
+    font-size: 0.85rem;
+    color: #0057ff;
+    margin-bottom: 0.4rem;
+  }
+
+  .post-card h2 {
+    font-size: 1.2rem;
     margin: 0 0 0.5rem;
+    line-height: 1.3;
   }
+
+  .post-card-meta {
+    font-size: 0.85rem;
+    color: #777;
+  }
+  .resources-search {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin: 3rem 0;
+}
+
+.pagination button {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  background: #0057ff;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.pagination button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+.resources-hero {
+  position: relative;
+  width: 100%;
+  height: 320px;
+  background-image: url('/img/your-guide-to-visiting-walt-disney-world-in-2026.jpg');
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+  margin-bottom: 3rem;
+}
+
+.resources-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.78);
+}
+
+.resources-hero-content {
+  position: relative;
+  z-index: 2;
+  color: white;
+  text-align: center;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 0 1rem;
+}
+
+.resources-hero-content h1 {
+  font-size: 2.8rem;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+
+.resources-hero-content p {
+  font-size: 1.2rem;
+  max-width: 600px;
+  margin: 0 auto;
+  opacity: 0.9;
+}
+
 </style>
 
-<div id="posts"></div>
+<!--Hero Image Start-->
+<section class="resources-hero">
+  <div class="resources-hero-overlay"></div>
+  <div class="resources-hero-content">
+    <h1>Resources</h1>
+    <p>Your guide to planning the perfect Orlando adventure — tips, guides, and expert insights.</p>
+  </div>
+</section>
+
+<!--Hero Image End-->
+
+<div class="resources-container">
+  <input 
+    id="searchInput" 
+    class="resources-search" 
+    type="text" 
+    placeholder="Search articles..."
+  >
+
+  <div id="postsGrid" class="posts-grid"></div>
+
+  <div id="pagination" class="pagination"></div>
+</div>
+
 <script type="module">
   import { createClient } from "https://esm.sh/@sanity/client";
+  import imageUrlBuilder from "https://esm.sh/@sanity/image-url";
 
   const client = createClient({
     projectId: "50x08vqr",
@@ -19,22 +264,111 @@
     useCdn: true,
   });
 
-  async function loadPosts() {
-    const posts = await client.fetch(`*[_type == "post"] | order(publishedAt desc){
-      title,
-      "slug": slug.current
-    }`);
+  const builder = imageUrlBuilder(client);
+  const urlFor = (src, w = 600) => builder.image(src).width(w).url();
 
-    const container = document.querySelector("#posts");
-
-    container.innerHTML = posts.map(post => `
-  <article class="resource-card">
-    <h2>${post.title}</h2>
-    <a href="/resources/${post.slug}.html">Read more</a>
-  </article>
-`).join("");
-
+  function readingTime(text) {
+    const words = text.trim().split(/\s+/).length;
+    return Math.max(1, Math.ceil(words / 200));
   }
+
+  let allPosts = [];
+  let filteredPosts = [];
+  let currentPage = 1;
+  const postsPerPage = 6;
+
+  async function loadPosts() {
+    allPosts = await client.fetch(`
+      *[_type == "post"] | order(publishedAt desc){
+        title,
+        body,
+        mainImage,
+        "slug": slug.current,
+        categories[]->{
+          title,
+          slug
+        }
+      }
+    `);
+
+    filteredPosts = allPosts;
+    renderPage();
+  }
+
+  function renderPage() {
+    const grid = document.getElementById("postsGrid");
+    const pagination = document.getElementById("pagination");
+
+    const start = (currentPage - 1) * postsPerPage;
+    const end = start + postsPerPage;
+    const pagePosts = filteredPosts.slice(start, end);
+
+    grid.innerHTML = pagePosts
+      .map(post => {
+        const temp = document.createElement("div");
+        temp.innerHTML = post.body?.map(b => b.children?.map(c => c.text).join(" ")).join(" ") || "";
+        const time = readingTime(temp.innerText);
+
+        const cats = post.categories?.length
+          ? post.categories.map(c => c.title).join(" • ")
+          : "";
+
+        const thumb = post.mainImage
+          ? `<img class="post-thumb" src="${urlFor(post.mainImage, 800)}" alt="${post.title}">`
+          : "";
+
+        return `
+          <a class="post-card" href="/resources/${post.slug}.html">
+            ${thumb}
+            <div class="post-card-content">
+              <div class="post-card-cats">${cats}</div>
+              <h2>${post.title}</h2>
+              <div class="post-card-meta">${time} min read</div>
+            </div>
+          </a>
+        `;
+      })
+      .join("");
+
+    const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
+
+    pagination.innerHTML = `
+      <button ${currentPage === 1 ? "disabled" : ""} onclick="prevPage()">Previous</button>
+      <button ${currentPage === totalPages ? "disabled" : ""} onclick="nextPage()">Next</button>
+    `;
+  }
+
+  window.prevPage = () => {
+    currentPage--;
+    renderPage();
+  };
+
+  window.nextPage = () => {
+    currentPage++;
+    renderPage();
+  };
+
+  document.getElementById("searchInput").addEventListener("input", e => {
+    const q = e.target.value.toLowerCase();
+
+    filteredPosts = allPosts.filter(post => {
+      const text = JSON.stringify(post).toLowerCase();
+      return text.includes(q);
+    });
+
+    currentPage = 1;
+    renderPage();
+  });
 
   loadPosts();
 </script>
+
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">
+    <img class="footer-logo" src="/img/Orlando Magic Planner.png" alt="Orlando Magic Planner">
+    <span class="footer-name">Orlando Magic Planner</span>
+  </div>
+  <div class="footer-copy">© 2026 Orlando Magic Planner. All rights reserved.</div>
+</footer>
