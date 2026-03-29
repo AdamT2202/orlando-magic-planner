@@ -1,0 +1,28 @@
+<div id="post"></div>
+
+<script type="module">
+  import { createClient } from "https://esm.sh/@sanity/client";
+
+  const client = createClient({
+    projectId: "50x08vqr",
+    dataset: "production",
+    apiVersion: "2023-10-01",
+    useCdn: true,
+  });
+
+  const slug = window.location.pathname.split("/").pop().replace(".html", "");
+
+  async function loadPost() {
+    const post = await client.fetch(
+      `*[_type == "post" && slug.current == $slug][0]`,
+      { slug }
+    );
+
+    document.querySelector("#post").innerHTML = `
+      <h1>${post.title}</h1>
+      <div>${post.body[0].children[0].text}</div>
+    `;
+  }
+
+  loadPost();
+</script>

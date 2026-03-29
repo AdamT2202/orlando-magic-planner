@@ -1,0 +1,40 @@
+<style>
+  .resource-card {
+    padding: 1rem;
+    border-bottom: 1px solid #ddd;
+  }
+  .resource-card h2 {
+    margin: 0 0 0.5rem;
+  }
+</style>
+
+<div id="posts"></div>
+<script type="module">
+  import { createClient } from "https://esm.sh/@sanity/client";
+
+  const client = createClient({
+    projectId: "50x08vqr",
+    dataset: "production",
+    apiVersion: "2023-10-01",
+    useCdn: true,
+  });
+
+  async function loadPosts() {
+    const posts = await client.fetch(`*[_type == "post"] | order(publishedAt desc){
+      title,
+      "slug": slug.current
+    }`);
+
+    const container = document.querySelector("#posts");
+
+    container.innerHTML = posts.map(post => `
+  <article class="resource-card">
+    <h2>${post.title}</h2>
+    <a href="/resources/${post.slug}.html">Read more</a>
+  </article>
+`).join("");
+
+  }
+
+  loadPosts();
+</script>

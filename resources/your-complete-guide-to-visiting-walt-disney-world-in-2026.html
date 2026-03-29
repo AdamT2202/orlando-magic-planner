@@ -1,0 +1,337 @@
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-7RWNLJQ3DH"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-7RWNLJQ3DH');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!--EDIT THIS SECTION--><title>Your Complete Guide to Visiting Walt Disney World in 2026 | Orlando Magic Planner</title>
+  <!--EDIT THIS SECTION--><meta name="description" content="From sweeping ride refurbishments and brand-new experiences to a packed calendar of festivals and special events, there has never been a better excuse to start planning your Orlando adventure.">
+  <link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<!--EDIT THIS SECTION START-->
+  
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Your Complete Guide to Visiting Walt Disney World in 2026",
+  "url": "https://orlandomagicplanner.com/resources/your-complete-guide-to-visiting-walt-disney-world-in-2026.html"
+}
+</script>
+
+<!--EDIT THIS SECTION END-->
+
+<link rel="stylesheet" href="/styles.css">
+<link rel="icon" type="image/png" href="/img/Orlando Magic Planner.png">
+</head>
+<!-- NAV -->
+<nav>
+  <a class="nav-brand" href="/">
+    <img class="nav-logo" src="/img/Orlando Magic Planner.png" alt="Orlando Magic Planner">
+    <div class="nav-wordmark">
+      <div class="nav-top">Orlando</div>
+      <div class="nav-name">Magic Planner</div>
+    </div>
+  </a>
+
+  <!-- Right: auth buttons + burger -->
+  <div class="nav-links">
+    <a class="btn-nav-ghost" href="/app">Sign in</a>
+    <a class="btn-nav-accent" href="/app#signup">Start planning →</a>
+    <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Slide Out Menu Start -->
+<div id="nav-placeholder"></div>
+<script>
+  fetch('/nav.html')
+    .then(r => r.text())
+    .then(html => {
+      document.getElementById('nav-placeholder').innerHTML = html;
+
+      // Runs after nav is injected into the page
+      const burger  = document.getElementById('navBurger');
+      const drawer  = document.getElementById('navDrawer');
+      const overlay = document.getElementById('navOverlay');
+
+      function openDrawer() {
+        overlay.style.display = 'block';
+        overlay.offsetHeight; // force reflow so transition fires
+        drawer.classList.add('open');
+        overlay.classList.add('open');
+        burger.classList.add('open');
+        burger.setAttribute('aria-expanded', 'true');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeDrawer() {
+        drawer.classList.remove('open');
+        overlay.classList.remove('open');
+        burger.classList.remove('open');
+        burger.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+        setTimeout(() => { overlay.style.display = 'none'; }, 300);
+      }
+
+      burger.addEventListener('click', () => {
+        drawer.classList.contains('open') ? closeDrawer() : openDrawer();
+      });
+
+      overlay.addEventListener('click', closeDrawer);
+
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') closeDrawer();
+      });
+    });
+</script>
+<!-- Slide Out Menu End-->
+<div id="post"></div>
+
+<style>
+  body {
+    font-family: system-ui, sans-serif;
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    line-height: 1.6;
+  }
+
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  img {
+    max-width: 100%;
+    border-radius: 8px;
+    margin: 1.5rem 0;
+  }
+
+  p {
+    margin: 1rem 0;
+  }
+
+  a {
+    color: #0057ff;
+  }
+
+  div#post{
+    padding-top: 4em;
+  }
+
+  .post-categories {
+  margin-bottom: 0.75rem;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.post-categories a,
+.post-categories span {
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.post-categories a:hover {
+  text-decoration: underline;
+}
+
+.back-link {
+  display: inline-block;
+  margin-top: 2rem;
+  color: #0057ff;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+.post-hero {
+  width: 100%;
+  max-height: 420px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+}
+
+.post-categories {
+  margin-bottom: 0.75rem;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.post-categories .cat-label {
+  font-weight: 600;
+  margin-right: 0.25rem;
+  color: #333;
+}
+
+.post-categories a,
+.post-categories span {
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.post-categories a:hover {
+  text-decoration: underline;
+}
+
+.back-link {
+  display: inline-block;
+  margin-top: 2rem;
+  color: #0057ff;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+</style>
+<!--POST INJECTION FROM SANITY.IO-->
+<script type="module">
+  import { createClient } from "https://esm.sh/@sanity/client";
+  import { toHTML } from "https://esm.sh/@portabletext/to-html";
+  import imageUrlBuilder from "https://esm.sh/@sanity/image-url";
+
+  // Connect to Sanity
+  const client = createClient({
+    projectId: "50x08vqr",
+    dataset: "production",
+    apiVersion: "2023-10-01",
+    useCdn: true,
+  });
+
+  // Image builder
+  const builder = imageUrlBuilder(client);
+
+  // urlFor returns a FINAL URL string
+  function urlFor(source, width = 1200) {
+    return builder.image(source).width(width).url();
+  }
+
+  // Reading time helper
+  function calculateReadingTime(text) {
+    const words = text.trim().split(/\s+/).length;
+    return Math.max(1, Math.ceil(words / 200));
+  }
+
+  // Extract slug from URL
+  const slug = window.location.pathname.split("/").pop().replace(".html", "");
+
+  async function loadPost() {
+    const post = await client.fetch(
+      `*[_type == "post" && slug.current == $slug][0]{
+        title,
+        body,
+        mainImage,
+        categories[]->{
+          _id,
+          title,
+          slug
+        }
+      }`,
+      { slug }
+    );
+
+    if (!post) {
+      document.querySelector("#post").innerHTML = "<p>Post not found.</p>";
+      return;
+    }
+
+    // Convert Portable Text → HTML
+    const html = toHTML(post.body, {
+      components: {
+        types: {
+          image: ({ value }) => `
+            <img src="${urlFor(value, 900)}" alt="${value.alt || ''}" />
+          `
+        }
+      }
+    });
+
+    // Reading time
+    const tempDiv = document.createElement("div");
+    tempDiv.innerHTML = html;
+    const plainText = tempDiv.innerText;
+    const readingTime = calculateReadingTime(plainText);
+
+    // Categories
+    const categoriesHTML = post.categories?.length
+      ? `<div class="post-categories">
+           <span class="cat-label">Categories:</span>
+           ${post.categories
+             .map(cat => {
+               const slug = cat.slug?.current;
+               if (!slug) return `<span>${cat.title}</span>`;
+               return `<a href="/resources/category/${slug}.html">${cat.title}</a>`;
+             })
+             .join(" • ")}
+         </div>`
+      : "";
+
+    // Hero image (safe)
+    let heroHTML = "";
+    if (post.mainImage && post.mainImage.asset) {
+      heroHTML = `
+        <img class="post-hero" 
+             src="${urlFor(post.mainImage, 1200)}" 
+             alt="${post.title}" />
+      `;
+    }
+
+    // Related posts (based on shared categories)
+    const relatedPosts = await client.fetch(
+      `*[_type == "post" &&
+         slug.current != $slug &&
+         count(categories[@._ref in $catIds]) > 0][0...3]{
+           title,
+           slug
+         }`,
+      {
+        slug,
+        catIds: post.categories?.map(c => c._id) || []
+      }
+    );
+
+    const relatedHTML = relatedPosts.length
+      ? `
+        <div class="related-posts">
+          <h3>Related Posts</h3>
+          <ul>
+            ${relatedPosts
+              .map(p => `<li><a href="/resources/${p.slug.current}.html">${p.title}</a></li>`)
+              .join("")}
+          </ul>
+        </div>
+      `
+      : "";
+
+    // Render the post
+    document.querySelector("#post").innerHTML = `
+      ${heroHTML}
+      ${categoriesHTML}
+      <div class="reading-time">${readingTime} min read</div>
+      <h1>${post.title}</h1>
+      ${html}
+      ${relatedHTML}
+      <a href="/resources/" class="back-link">← Back to Resources</a>
+    `;
+  }
+
+  loadPost();
+</script>
+<!--END POST INJECTION FROM SANITY.IO-->
