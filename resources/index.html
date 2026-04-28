@@ -1,3 +1,5 @@
+<!doctype html>
+<html lang="en">
 <head>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-7RWNLJQ3DH"></script>
@@ -9,12 +11,10 @@
   </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!--EDIT THIS SECTION--><title>Resources | Orlando Magic Planner</title>
-  <!--EDIT THIS SECTION--><meta name="description" content="Your guide to planning the perfect Orlando adventure — tips, guides, and expert insights.">
+  <title>Resources | Orlando Magic Planner</title>
+  <meta name="description" content="Your guide to planning the perfect Orlando adventure — tips, guides, and expert insights.">
   <link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-<!--EDIT THIS SECTION START-->
-  
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -24,11 +24,11 @@
 }
 </script>
 
-<!--EDIT THIS SECTION END-->
-
 <link rel="stylesheet" href="/styles.css">
 <link rel="icon" type="image/png" href="/img/Orlando Magic Planner.png">
 </head>
+
+<body>
 <!-- NAV -->
 <nav>
   <a class="nav-brand" href="/">
@@ -95,45 +95,111 @@
     });
 </script>
 <!-- Slide Out Menu End-->
+
 <style>
+  :root{
+    --card-bg: #fff;
+    --muted: #666;
+    --accent: #0057ff;
+    --thumb-height: 140px;
+  }
+
+  body { font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; background:#f7f8fb; color:#111; margin:0; }
+
   .resources-container {
-    max-width: 900px;
-    margin: 4rem auto;
+    max-width: 1100px;
+    margin: 3.5rem auto;
     padding: 0 1rem;
   }
 
   .resources-title {
     font-size: 2.4rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     font-weight: 700;
+  }
+
+  .top-actions {
+    display:flex;
+    gap:1rem;
+    margin-bottom:1.25rem;
+    align-items:center;
+    flex-wrap:wrap;
+  }
+
+  .resources-search {
+    flex:1 1 420px;
+    min-width:220px;
+    padding: 0.8rem 1rem;
+    font-size: 1rem;
+    border: 1px solid #e6e9f2;
+    border-radius: 8px;
+    background: #fff;
+  }
+
+  .small-btn {
+    padding:0.5rem 0.9rem;
+    border-radius:8px;
+    border:1px solid #ddd;
+    background:#fff;
+    cursor:pointer;
+    font-size:0.95rem;
+  }
+
+  .category-bar {
+    display:flex;
+    gap:0.5rem;
+    flex-wrap:wrap;
+    margin-bottom:1.5rem;
+  }
+
+  .category-btn {
+    padding:0.5rem 0.9rem;
+    border-radius:999px;
+    border:1px solid #e6e9f2;
+    background:#fff;
+    cursor:pointer;
+    font-size:0.95rem;
+    color:#222;
+  }
+
+  .category-btn.active {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
   }
 
   .posts-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 2rem;
+    gap: 1.25rem;
   }
 
   .post-card {
     display: block;
-    background: #fff;
+    background: var(--card-bg);
     border-radius: 12px;
     overflow: hidden;
     text-decoration: none;
     color: inherit;
-    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+    box-shadow: 0 6px 18px rgba(16,24,40,0.06);
     transition: transform 0.15s ease, box-shadow 0.15s ease;
+    border: 1px solid rgba(16,24,40,0.03);
   }
 
   .post-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+    transform: translateY(-6px);
+    box-shadow: 0 10px 30px rgba(16,24,40,0.08);
   }
 
   .post-thumb {
     width: 100%;
-    height: 160px;
-    object-fit: cover;
+    height: var(--thumb-height);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#fff;
+    font-weight:700;
+    font-size:1.05rem;
   }
 
   .post-card-content {
@@ -143,90 +209,100 @@
 
   .post-card-cats {
     font-size: 0.85rem;
-    color: #0057ff;
+    color: var(--accent);
     margin-bottom: 0.4rem;
   }
 
   .post-card h2 {
-    font-size: 1.2rem;
+    font-size: 1.05rem;
     margin: 0 0 0.5rem;
-    line-height: 1.3;
+    line-height: 1.25;
   }
 
   .post-card-meta {
     font-size: 0.85rem;
-    color: #777;
+    color: var(--muted);
   }
-  .resources-search {
-  width: 100%;
-  padding: 0.8rem 1rem;
-  font-size: 1rem;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  margin-bottom: 2rem;
-}
 
-.pagination {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  margin: 3rem 0;
-}
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 2.25rem 0 1rem;
+  }
 
-.pagination button {
-  padding: 0.6rem 1.2rem;
-  border: none;
-  background: #0057ff;
-  color: white;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 0.95rem;
-}
+  .section-header h3 {
+    margin: 0;
+    font-size: 1.5rem;
+  }
 
-.pagination button:disabled {
-  background: #ccc;
-  cursor: not-allowed;
-}
-.resources-hero {
-  position: relative;
-  width: 100%;
-  height: 320px;
-  background-image: url('/img/your-guide-to-visiting-walt-disney-world-in-2026.jpg');
-  background-size: cover;
-  background-position: center;
-  overflow: hidden;
-  margin-bottom: 3rem;
-}
+  .section-count {
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
 
-.resources-hero-overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.78);
-}
+  .section-grid {
+    margin-bottom: 1.5rem;
+  }
 
-.resources-hero-content {
-  position: relative;
-  z-index: 2;
-  color: white;
-  text-align: center;
-  top: 50%;
-  transform: translateY(-50%);
-  padding: 0 1rem;
+input#searchInput {
+    color: black;
 }
+  .resources-hero {
+    position: relative;
+    width: 100%;
+    height: 320px;
+    background-image: url('/img/your-guide-to-visiting-walt-disney-world-in-2026.jpg');
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+    margin-bottom: 2.5rem;
+  }
 
-.resources-hero-content h1 {
-  font-size: 2.8rem;
-  margin-bottom: 0.5rem;
-  font-weight: 700;
-}
+  .resources-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.78);
+  }
 
-.resources-hero-content p {
-  font-size: 1.2rem;
-  max-width: 600px;
-  margin: 0 auto;
-  opacity: 0.9;
-}
+  .resources-hero-content {
+    position: relative;
+    z-index: 2;
+    color: white;
+    text-align: center;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 0 1rem;
+  }
 
+  .resources-hero-content h1 {
+    font-size: 2.8rem;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+  }
+
+  .resources-hero-content p {
+    font-size: 1.1rem;
+    max-width: 700px;
+    margin: 0 auto;
+    opacity: 0.95;
+  }
+
+  footer {
+    margin-top: 3.5rem;
+    padding: 2.5rem 1rem;
+    background:#fff;
+    border-top:1px solid #eef0f6;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:1rem;
+    flex-wrap:wrap;
+  }
+
+  .footer-brand { display:flex; align-items:center; gap:0.75rem; }
+  .footer-logo { width:40px; height:40px; object-fit:contain; }
+  .footer-copy { color:var(--muted); font-size:0.95rem; }
 </style>
 
 <!--Hero Image Start-->
@@ -237,132 +313,480 @@
     <p>Your guide to planning the perfect Orlando adventure — tips, guides, and expert insights.</p>
   </div>
 </section>
-
 <!--Hero Image End-->
 
 <div class="resources-container">
-  <input 
-    id="searchInput" 
-    class="resources-search" 
-    type="text" 
-    placeholder="Search articles..."
-  >
+  <div class="top-actions">
+    <input id="searchInput" class="resources-search" type="text" placeholder="Search articles and guides...">
+    <button id="expandAll" class="small-btn">Expand all</button>
+    <button id="collapseAll" class="small-btn">Collapse all</button>
+  </div>
 
-  <div id="postsGrid" class="posts-grid"></div>
+  <div class="category-bar" id="categoryBar" aria-label="Filter by park">
+    <!-- category buttons injected here -->
+  </div>
 
-  <div id="pagination" class="pagination"></div>
+  <div id="resourcesSections"></div>
 </div>
 
-<script type="module">
-  import { createClient } from "https://esm.sh/@sanity/client";
-  import imageUrlBuilder from "https://esm.sh/@sanity/image-url";
+<script>
+/* Static Resources Hub (updated)
+   - Adds category buttons at top (All / park names)
+   - Generic, attractive SVG thumbnails generated per card
+   - Grouped sections by park
+   - Clicking a category filters to that park only
+*/
 
-  const client = createClient({
-    projectId: "50x08vqr",
-    dataset: "production",
-    apiVersion: "2023-10-01",
-    useCdn: true,
+/* Master list of guide slugs (converted from your local filenames) */
+const slugs = [
+  /* Animal Kingdom */
+  "animal-kingdom-for-adults-in-autumn",
+  "animal-kingdom-for-adults-in-spring",
+  "animal-kingdom-for-adults-in-summer",
+  "animal-kingdom-for-adults-in-winter",
+  "animal-kingdom-for-couples-in-autumn",
+  "animal-kingdom-for-couples-in-spring",
+  "animal-kingdom-for-couples-in-summer",
+  "animal-kingdom-for-couples-in-winter",
+  "animal-kingdom-for-solo-travellers-in-autumn",
+  "animal-kingdom-for-solo-travellers-in-spring",
+  "animal-kingdom-for-solo-travellers-in-summer",
+  "animal-kingdom-for-solo-travellers-in-winter",
+  "animal-kingdom-with-teens-in-autumn",
+  "animal-kingdom-with-teens-in-spring",
+  "animal-kingdom-with-teens-in-summer",
+  "animal-kingdom-with-teens-in-winter",
+  "animal-kingdom-with-young-kids-in-autumn",
+  "animal-kingdom-with-young-kids-in-spring",
+  "animal-kingdom-with-young-kids-in-summer",
+  "animal-kingdom-with-young-kids-in-winter",
+
+  /* EPCOT */
+  "epcot-for-adults-in-autumn",
+  "epcot-for-adults-in-spring",
+  "epcot-for-adults-in-summer",
+  "epcot-for-adults-in-winter",
+  "epcot-for-couples-in-autumn",
+  "epcot-for-couples-in-spring",
+  "epcot-for-couples-in-summer",
+  "epcot-for-couples-in-winter",
+  "epcot-for-solo-travellers-in-autumn",
+  "epcot-for-solo-travellers-in-spring",
+  "epcot-for-solo-travellers-in-summer",
+  "epcot-for-solo-travellers-in-winter",
+  "epcot-with-teens-in-autumn",
+  "epcot-with-teens-in-spring",
+  "epcot-with-teens-in-summer",
+  "epcot-with-teens-in-winter",
+  "epcot-with-young-kids-in-autumn",
+  "epcot-with-young-kids-in-spring",
+  "epcot-with-young-kids-in-summer",
+  "epcot-with-young-kids-in-winter",
+
+  /* Epic Universe */
+  "epic-universe-for-adults-in-autumn",
+  "epic-universe-for-adults-in-spring",
+  "epic-universe-for-adults-in-summer",
+  "epic-universe-for-adults-in-winter",
+  "epic-universe-for-couples-in-autumn",
+  "epic-universe-for-couples-in-spring",
+  "epic-universe-for-couples-in-summer",
+  "epic-universe-for-couples-in-winter",
+  "epic-universe-for-solo-travellers-in-autumn",
+  "epic-universe-for-solo-travellers-in-spring",
+  "epic-universe-for-solo-travellers-in-summer",
+  "epic-universe-with-teens-in-autumn",
+  "epic-universe-with-teens-in-spring",
+  "epic-universe-with-teens-in-summer",
+  "epic-universe-with-teens-in-winter",
+  "epic-universe-with-young-kids-in-autumn",
+  "epic-universe-with-young-kids-in-spring",
+  "epic-universe-with-young-kids-in-summer",
+  "epic-universe-with-young-kids-in-winter",
+
+  /* Hollywood Studios */
+  "hollywood-studios-for-adults-in-autumn",
+  "hollywood-studios-for-adults-in-spring",
+  "hollywood-studios-for-adults-in-summer",
+  "hollywood-studios-for-adults-in-winter",
+  "hollywood-studios-for-couples-in-autumn",
+  "hollywood-studios-for-couples-in-spring",
+  "hollywood-studios-for-couples-in-summer",
+  "hollywood-studios-for-couples-in-winter",
+  "hollywood-studios-for-solo-travellers-in-autumn",
+  "hollywood-studios-for-solo-travellers-in-spring",
+  "hollywood-studios-for-solo-travellers-in-summer",
+  "hollywood-studios-for-solo-travellers-in-winter",
+  "hollywood-studios-with-teens-in-autumn",
+  "hollywood-studios-with-teens-in-spring",
+  "hollywood-studios-with-teens-in-summer",
+  "hollywood-studios-with-teens-in-winter",
+  "hollywood-studios-with-young-kids-in-autumn",
+  "hollywood-studios-with-young-kids-in-spring",
+  "hollywood-studios-with-young-kids-in-summer",
+  "hollywood-studios-with-young-kids-in-winter",
+
+  /* Islands of Adventure */
+  "islands-of-adventure-for-adults-in-autumn",
+  "islands-of-adventure-for-adults-in-spring",
+  "islands-of-adventure-for-adults-in-summer",
+  "islands-of-adventure-for-adults-in-winter",
+  "islands-of-adventure-for-couples-in-autumn",
+  "islands-of-adventure-for-couples-in-spring",
+  "islands-of-adventure-for-couples-in-summer",
+  "islands-of-adventure-for-couples-in-winter",
+  "islands-of-adventure-for-solo-travellers-in-autumn",
+  "islands-of-adventure-for-solo-travellers-in-spring",
+  "islands-of-adventure-for-solo-travellers-in-summer",
+  "islands-of-adventure-for-solo-travellers-in-winter",
+  "islands-of-adventure-with-teens-in-autumn",
+  "islands-of-adventure-with-teens-in-spring",
+  "islands-of-adventure-with-teens-in-summer",
+  "islands-of-adventure-with-teens-in-winter",
+  "islands-of-adventure-with-young-kids-in-autumn",
+  "islands-of-adventure-with-young-kids-in-spring",
+  "islands-of-adventure-with-young-kids-in-summer",
+  "islands-of-adventure-with-young-kids-in-winter",
+
+  /* Magic Kingdom */
+  "magic-kingdom-for-adults-in-autumn",
+  "magic-kingdom-for-adults-in-spring",
+  "magic-kingdom-for-adults-in-summer",
+  "magic-kingdom-for-adults-in-winter",
+  "magic-kingdom-for-couples-in-autumn",
+  "magic-kingdom-for-couples-in-spring",
+  "magic-kingdom-for-couples-in-summer",
+  "magic-kingdom-for-couples-in-winter",
+  "magic-kingdom-for-solo-travellers-in-autumn",
+  "magic-kingdom-for-solo-travellers-in-spring",
+  "magic-kingdom-for-solo-travellers-in-summer",
+  "magic-kingdom-for-solo-travellers-in-winter",
+  "magic-kingdom-with-teens-in-autumn",
+  "magic-kingdom-with-teens-in-spring",
+  "magic-kingdom-with-teens-in-summer",
+  "magic-kingdom-with-teens-in-winter",
+  "magic-kingdom-with-young-kids-in-autumn",
+  "magic-kingdom-with-young-kids-in-spring",
+  "magic-kingdom-with-young-kids-in-summer",
+  "magic-kingdom-with-young-kids-in-winter",
+
+  /* Seaworld */
+  "seaworld-for-adults-in-autumn",
+  "seaworld-for-adults-in-spring",
+  "seaworld-for-adults-in-summer",
+  "seaworld-for-adults-in-winter",
+  "seaworld-for-couples-in-autumn",
+  "seaworld-for-couples-in-spring",
+  "seaworld-for-couples-in-summer",
+  "seaworld-for-couples-in-winter",
+  "seaworld-for-solo-travellers-in-autumn",
+  "seaworld-for-solo-travellers-in-spring",
+  "seaworld-for-solo-travellers-in-summer",
+  "seaworld-for-solo-travellers-in-winter",
+  "seaworld-with-teens-in-autumn",
+  "seaworld-with-teens-in-spring",
+  "seaworld-with-teens-in-summer",
+  "seaworld-with-teens-in-winter",
+  "seaworld-with-young-kids-in-autumn",
+  "seaworld-with-young-kids-in-spring",
+  "seaworld-with-young-kids-in-summer",
+  "seaworld-with-young-kids-in-winter",
+
+  /* Universal Studios */
+  "universal-studios-for-adults-in-autumn",
+  "universal-studios-for-adults-in-spring",
+  "universal-studios-for-adults-in-summer",
+  "universal-studios-for-adults-in-winter",
+  "universal-studios-for-couples-in-autumn",
+  "universal-studios-for-couples-in-spring",
+  "universal-studios-for-couples-in-summer",
+  "universal-studios-for-couples-in-winter",
+  "universal-studios-for-solo-travellers-in-autumn",
+  "universal-studios-for-solo-travellers-in-spring",
+  "universal-studios-for-solo-travellers-in-summer",
+  "universal-studios-for-solo-travellers-in-winter",
+  "universal-studios-with-teens-in-autumn",
+  "universal-studios-with-teens-in-spring",
+  "universal-studios-with-teens-in-summer",
+  "universal-studios-with-teens-in-winter",
+  "universal-studios-with-young-kids-in-autumn",
+  "universal-studios-with-young-kids-in-spring",
+  "universal-studios-with-young-kids-in-summer",
+  "universal-studios-with-young-kids-in-winter"
+];
+
+/* Known park keys and display names for grouping */
+const parkKeys = {
+  "magic-kingdom": "Magic Kingdom",
+  "epcot": "EPCOT",
+  "animal-kingdom": "Animal Kingdom",
+  "hollywood-studios": "Hollywood Studios",
+  "islands-of-adventure": "Islands of Adventure",
+  "universal-studios": "Universal Studios",
+  "seaworld": "SeaWorld",
+  "epic-universe": "Epic Universe"
+};
+
+/* Color palette for generic thumbnails (one color per park key) */
+const parkColors = {
+  "Magic Kingdom": ["#F59E0B","#F97316"],
+  "EPCOT": ["#0EA5A4","#06B6D4"],
+  "Animal Kingdom": ["#16A34A","#4ADE80"],
+  "Hollywood Studios": ["#7C3AED","#A78BFA"],
+  "Islands of Adventure": ["#0EA5A4","#34D399"],
+  "Universal Studios": ["#2563EB","#60A5FA"],
+  "SeaWorld": ["#0EA5E9","#06B6D4"],
+  "Epic Universe": ["#EF4444","#FB7185"],
+  "Other": ["#64748B","#94A3B8"]
+};
+
+/* Utility: convert slug to Option A title (e.g., "epcot-for-couples-in-spring" -> "EPCOT for Couples in Spring") */
+function slugToTitle(slug) {
+  slug = slug.replace(/\.html$/, "");
+  const parts = slug.split("-");
+  const words = parts.map(w => {
+    if (w === "epcot") return "EPCOT";
+    if (w === "seaworld") return "SeaWorld";
+    if (w === "epic") return "Epic";
+    if (w === "universal") return "Universal";
+    if (w === "studios") return "Studios";
+    if (w === "islands") return "Islands";
+    if (w === "adventure") return "Adventure";
+    if (w === "kingdom") return "Kingdom";
+    if (w === "hollywood") return "Hollywood";
+    if (w === "magic") return "Magic";
+    if (w === "animal") return "Animal";
+    if (w === "young") return "Young";
+    if (w === "kids") return "Kids";
+    if (w === "teens") return "Teens";
+    if (w === "solo") return "Solo";
+    if (w === "travellers") return "Travellers";
+    if (w === "traveller") return "Traveller";
+    if (w === "couples") return "Couples";
+    if (w === "adults") return "Adults";
+    if (w === "in") return "in";
+    if (w === "spring") return "Spring";
+    if (w === "summer") return "Summer";
+    if (w === "autumn") return "Autumn";
+    if (w === "winter") return "Winter";
+    if (w === "with") return "with";
+    if (w === "for") return "for";
+    return w.charAt(0).toUpperCase() + w.slice(1);
   });
 
-  const builder = imageUrlBuilder(client);
-  const urlFor = (src, w = 600) => builder.image(src).width(w).url();
-
-  function readingTime(text) {
-    const words = text.trim().split(/\s+/).length;
-    return Math.max(1, Math.ceil(words / 200));
-  }
-
-  let allPosts = [];
-  let filteredPosts = [];
-  let currentPage = 1;
-  const postsPerPage = 6;
-
-  async function loadPosts() {
-    allPosts = await client.fetch(`
-      *[_type == "post"] | order(publishedAt desc){
-        title,
-        body,
-        mainImage,
-        "slug": slug.current,
-        categories[]->{
-          title,
-          slug
-        }
+  for (const key in parkKeys) {
+    if (slug.startsWith(key + "-") || slug === key) {
+      const parkName = parkKeys[key];
+      const keyParts = key.split("-");
+      // remove keyParts from start of words if present
+      let idx = 0;
+      while (idx < keyParts.length && words.length && words[0].toLowerCase() === keyParts[idx]) {
+        words.shift();
+        idx++;
       }
-    `);
-
-    filteredPosts = allPosts;
-    renderPage();
+      const rest = words.map(w => w === "in" ? "in" : w).join(" ");
+      return rest ? `${parkName} ${rest}` : parkName;
+    }
   }
+  return words.join(" ");
+}
 
-  function renderPage() {
-    const grid = document.getElementById("postsGrid");
-    const pagination = document.getElementById("pagination");
+/* Build guide objects */
+const guides = slugs.map(s => {
+  return {
+    slug: s,
+    url: `/resources/${s}.html`,
+    title: slugToTitle(s),
+    park: detectPark(s)
+  };
+});
 
-    const start = (currentPage - 1) * postsPerPage;
-    const end = start + postsPerPage;
-    const pagePosts = filteredPosts.slice(start, end);
-
-    grid.innerHTML = pagePosts
-      .map(post => {
-        const temp = document.createElement("div");
-        temp.innerHTML = post.body?.map(b => b.children?.map(c => c.text).join(" ")).join(" ") || "";
-        const time = readingTime(temp.innerText);
-
-        const cats = post.categories?.length
-          ? post.categories.map(c => c.title).join(" • ")
-          : "";
-
-        const thumb = post.mainImage
-          ? `<img class="post-thumb" src="${urlFor(post.mainImage, 800)}" alt="${post.title}">`
-          : "";
-
-        return `
-          <a class="post-card" href="/resources/${post.slug}.html">
-            ${thumb}
-            <div class="post-card-content">
-              <div class="post-card-cats">${cats}</div>
-              <h2>${post.title}</h2>
-              <div class="post-card-meta">${time} min read</div>
-            </div>
-          </a>
-        `;
-      })
-      .join("");
-
-    const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
-
-    pagination.innerHTML = `
-      <button ${currentPage === 1 ? "disabled" : ""} onclick="prevPage()">Previous</button>
-      <button ${currentPage === totalPages ? "disabled" : ""} onclick="nextPage()">Next</button>
-    `;
+/* Detect park by checking known keys in slug */
+function detectPark(slug) {
+  for (const key in parkKeys) {
+    if (slug.startsWith(key + "-") || slug.includes("-" + key + "-") || slug === key) {
+      return parkKeys[key];
+    }
   }
+  for (const key in parkKeys) {
+    if (slug.includes(key)) return parkKeys[key];
+  }
+  return "Other";
+}
 
-  window.prevPage = () => {
-    currentPage--;
-    renderPage();
-  };
-
-  window.nextPage = () => {
-    currentPage++;
-    renderPage();
-  };
-
-  document.getElementById("searchInput").addEventListener("input", e => {
-    const q = e.target.value.toLowerCase();
-
-    filteredPosts = allPosts.filter(post => {
-      const text = JSON.stringify(post).toLowerCase();
-      return text.includes(q);
-    });
-
-    currentPage = 1;
-    renderPage();
+/* Group guides by park */
+function groupByPark(list) {
+  const map = {};
+  list.forEach(g => {
+    if (!map[g.park]) map[g.park] = [];
+    map[g.park].push(g);
   });
+  const order = ["Magic Kingdom","EPCOT","Animal Kingdom","Hollywood Studios","Islands of Adventure","Universal Studios","SeaWorld","Epic Universe"];
+  const ordered = {};
+  order.forEach(k => {
+    if (map[k]) ordered[k] = map[k];
+  });
+  for (const k in map) {
+    if (!ordered[k]) ordered[k] = map[k];
+  }
+  return ordered;
+}
 
-  loadPosts();
+/* Create a simple SVG thumbnail string (generic, attractive) */
+function svgThumb(parkName, title) {
+  const colors = parkColors[parkName] || parkColors["Other"];
+  const bg1 = colors[0];
+  const bg2 = colors[1];
+  // Use park initials for a bold, readable badge
+  const initials = parkName.split(" ").map(w => w[0]).slice(0,2).join("").toUpperCase();
+  // Shorten title for overlay
+  const short = title.split(" ").slice(0,6).join(" ");
+  return `
+    <svg class="post-thumb" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 300" preserveAspectRatio="xMidYMid slice">
+      <defs>
+        <linearGradient id="g${initials.replace(/\W/g,'')}" x1="0" x2="1" y1="0" y2="1">
+          <stop offset="0" stop-color="${bg1}"/>
+          <stop offset="1" stop-color="${bg2}"/>
+        </linearGradient>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#g${initials.replace(/\W/g,'')})"/>
+      <g fill="rgba(255,255,255,0.12)">
+        <circle cx="520" cy="40" r="40"/>
+        <circle cx="480" cy="80" r="28"/>
+        <circle cx="540" cy="110" r="18"/>
+      </g>
+      <g transform="translate(24,36)">
+        <rect x="0" y="0" width="84" height="84" rx="14" fill="rgba(255,255,255,0.12)"/>
+        <text x="42" y="52" font-family="Inter, Arial" font-size="36" fill="#fff" font-weight="700" text-anchor="middle" alignment-baseline="middle">${initials}</text>
+      </g>
+      <text x="24" y="220" font-family="Inter, Arial" font-size="22" fill="#ffffff" font-weight="700">${escapeXml(short)}</text>
+      <text x="24" y="248" font-family="Inter, Arial" font-size="14" fill="rgba(255,255,255,0.9)">${parkName}</text>
+    </svg>
+  `;
+}
+
+/* Escape XML for SVG text nodes */
+function escapeXml(unsafe) {
+  return unsafe.replace(/[&<>"']/g, function (c) {
+    switch (c) {
+      case '&': return '&amp;';
+      case '<': return '&lt;';
+      case '>': return '&gt;';
+      case '"': return '&quot;';
+      case "'": return '&apos;';
+    }
+  });
+}
+
+/* Create card HTML with SVG thumbnail */
+function createCardHtml(guide) {
+  const thumbSvg = svgThumb(guide.park, guide.title);
+  const category = guide.park;
+  return `
+    <a class="post-card" href="${guide.url}">
+      ${thumbSvg}
+      <div class="post-card-content">
+        <div class="post-card-cats">${category}</div>
+        <h2>${guide.title}</h2>
+        <div class="post-card-meta">Guide</div>
+      </div>
+    </a>
+  `;
+}
+
+/* Render sections */
+function renderSections(filteredGuides) {
+  const container = document.getElementById("resourcesSections");
+  container.innerHTML = "";
+  const grouped = groupByPark(filteredGuides);
+
+  for (const park in grouped) {
+    const guidesForPark = grouped[park];
+    const section = document.createElement("section");
+    section.className = "resources-section";
+
+    const header = document.createElement("div");
+    header.className = "section-header";
+    header.innerHTML = `<h3>${park} Guides</h3><div class="section-count">${guidesForPark.length} guides</div>`;
+
+    const gridWrap = document.createElement("div");
+    gridWrap.className = "section-grid";
+
+    const grid = document.createElement("div");
+    grid.className = "posts-grid";
+    grid.innerHTML = guidesForPark.map(g => createCardHtml(g)).join("");
+
+    gridWrap.appendChild(grid);
+    section.appendChild(header);
+    section.appendChild(gridWrap);
+    container.appendChild(section);
+  }
+}
+
+/* Category bar rendering and interactions */
+const categoryBar = document.getElementById("categoryBar");
+const categories = ["All", ...Object.values(parkKeys)];
+function renderCategoryBar() {
+  categoryBar.innerHTML = categories.map(cat => {
+    const safe = cat.replace(/\s+/g,'-').toLowerCase();
+    return `<button class="category-btn" data-cat="${cat}">${cat}</button>`;
+  }).join("");
+  // set All active by default
+  categoryBar.querySelector('[data-cat="All"]').classList.add('active');
+
+  categoryBar.addEventListener('click', (e) => {
+    const btn = e.target.closest('.category-btn');
+    if (!btn) return;
+    const cat = btn.getAttribute('data-cat');
+    // toggle active class
+    categoryBar.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    // filter and render
+    if (cat === "All") {
+      renderSections(guides);
+    } else {
+      const filtered = guides.filter(g => g.park === cat);
+      renderSections(filtered);
+      // scroll to sections container for better UX
+      document.getElementById('resourcesSections').scrollIntoView({behavior:'smooth', block:'start'});
+    }
+  });
+}
+
+/* Search/filter logic */
+const searchInput = document.getElementById("searchInput");
+function filterGuides(q) {
+  if (!q) return guides;
+  q = q.trim().toLowerCase();
+  return guides.filter(g => {
+    return g.title.toLowerCase().includes(q) || g.slug.toLowerCase().includes(q) || g.park.toLowerCase().includes(q);
+  });
+}
+
+/* Expand / collapse helpers */
+document.getElementById("expandAll").addEventListener("click", () => {
+  document.querySelectorAll(".posts-grid").forEach(g => g.style.display = "grid");
+});
+document.getElementById("collapseAll").addEventListener("click", () => {
+  document.querySelectorAll(".posts-grid").forEach(g => g.style.display = "none");
+});
+
+/* Live search with category awareness */
+searchInput.addEventListener("input", (e) => {
+  const q = e.target.value;
+  const activeBtn = categoryBar.querySelector('.category-btn.active');
+  const activeCat = activeBtn ? activeBtn.getAttribute('data-cat') : "All";
+  let filtered = filterGuides(q);
+  if (activeCat && activeCat !== "All") {
+    filtered = filtered.filter(g => g.park === activeCat);
+  }
+  renderSections(filtered);
+});
+
+/* Initial render */
+renderCategoryBar();
+renderSections(guides);
 </script>
-
 
 <!-- FOOTER -->
 <footer>
@@ -372,3 +796,5 @@
   </div>
   <div class="footer-copy">© 2026 Orlando Magic Planner. All rights reserved.</div>
 </footer>
+</body>
+</html>
