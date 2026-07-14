@@ -425,23 +425,18 @@ window.verifyPw = async function() {
 async function loadTrip() {
   show('loaderEl');
 
-  const { data: trip, error: tErr } = await sb
-    .from('trips')
-    .select('*')
-    .eq('id', shareRecord.trip_id)
-    .single();
+  const { data, error } = await sb.rpc('get_shared_trip', {
+    p_token: token
+  });
 
-  if (tErr || !trip) { showError(); return; }
-
-  const { data: events } = await sb
-    .from('events')
-    .select('*')
-    .eq('trip_id', trip.id)
-    .order('date')
-    .order('time');
+  if (error || !data) {
+    console.error(error);
+    showError();
+    return;
+  }
 
   hide('loaderEl');
-  renderTrip(trip, events || []);
+  renderTrip(data.trip, data.events || []);
 }
 
 function renderTrip(trip, events) {
